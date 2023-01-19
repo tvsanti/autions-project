@@ -115,19 +115,52 @@ header
     width: 100%
     display: flex
     justify-content: center
+    margin: 2rem 0
     form
-        width: 30%
-        border: .5px solid gray
-        padding: 1rem 3rem
-        border-radius: 1rem
+      width: 28%
+      border: .5px solid gray
+      padding: 1.5rem 3rem
+      border-radius: 1rem
+      display: flex
+      flex-direction: column
+      h1
+        font-weight: 600
+      select
+        height: 2rem
+      input,textarea,select
+        padding-left: 8px
+      input
+          height: 2rem
+          width: 100%
+      textarea
+        resize: vertical
+        height: 25vh
+        padding-top: 8px
+      label
+        margin-top: 2rem
+      
+      #label1
+        margin-top: 1rem
+
+      #arrastrarImagen
+        opacity: 1
+        border: 2px dashed grey
         display: flex
-        flex-direction: column
-        input
-            margin: 1rem 0
-            width: 100%
+        justify-content: center
+        align-items: center
+        flex-direction: column 
+        margin-top: 2rem
+        padding: 3rem 0
+        #inputFile
+          opacity: 0
+          padding-left: 0   
+          position: absolute 
+        div
+          text-align: center
 
 
-#file
-    width: 200px
-    background: red
-    padding: 1rem
+    #file
+      width: 200px
+      background: red
+      padding: 1rem
+    

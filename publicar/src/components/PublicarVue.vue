@@ -2,7 +2,7 @@
     <div class="mainPublicar">
         <form action="">
             <h1>Publicar producto</h1>
-            <label for="">Categoria</label>
+            <label id="label1" for="">Categoria</label>
             <select name="" id="">
                 <option value="">Cosas</option>
                 <option value="">Cosas</option>
@@ -20,7 +20,15 @@
             </select>
             <label for="">Precio</label>
             <input type="number">
-            <input type="file">
+            <div id="arrastrarImagen">
+                <input id="inputFile" type="file" >
+                <div>
+                    <i></i>
+                    <h3>Arrastrar fotos</h3>
+                    <h3>- o -</h3>
+                    <h3>Seleccionar fotos</h3>
+                </div>
+            </div>
         </form>
     </div>
 </template>
