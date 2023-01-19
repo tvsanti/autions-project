@@ -29,6 +29,7 @@
                     <h3>Seleccionar fotos</h3>
                 </div>
             </div>
+            <input id="inputEnviar" type="submit" value="Publicar">
         </form>
     </div>
 </template>
