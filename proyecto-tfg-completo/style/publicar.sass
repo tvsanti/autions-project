@@ -1,0 +1,179 @@
+@mixin displayFlex($flexDire,$justifyCont,$alingItem)
+  display: flex
+  flex-direction: $flexDire
+  justify-content: $justifyCont
+  align-items: $alingItem
+
+@mixin buttonStyle()
+  background: none
+  border: none
+  border-radius: 1rem
+  cursor: pointer
+*
+  font-family: 'Poppins', sans-serif
+  margin: 0
+  padding: 0
+  box-sizing: border-box
+
+header
+  @include displayFlex(row,space-around,center)
+  
+  width: 100%
+  input
+    padding-left: 8px
+    border-radius: 1rem
+    border: 1px solid #888888
+    height: 2.5rem
+    margin: 0 3rem
+    width: 60%
+  background: white
+  img
+    width: 150px
+    padding: .5rem 0
+  .header-buttons
+    button
+      @include buttonStyle()
+      padding: 10px 1.5rem
+      background: #bb1e26
+      border-radius: 2rem
+      color: white
+
+      margin-left: 2rem
+      i
+        padding-right: .5rem
+.popup
+  position: fixed
+  top: 0
+  right: 0
+  left: 0
+  bottom: 0
+  z-index: 99
+  background-color: rgba(0, 0, 0, 0.2)
+
+  display: flex
+  align-items: center
+  justify-content: center
+
+.popup2
+  background: #fff
+  border-radius: 1rem
+  box-shadow: 4px 4px 14px #474747
+  width: 23%
+  padding: 2rem
+  display: flex
+  flex-direction: column
+  .popup-close
+    display: flex
+    justify-content: flex-end
+
+  .inicio-registro
+    margin-top: 1rem
+    width: 100%
+    display: flex
+    justify-content: space-around
+    button
+      cursor: pointer
+      width: 100%
+      background: none
+      border: none
+      font-size: 1.1rem
+      font-weight: 400
+
+      &:focus
+        background-color: #bb1e26
+        color: white
+  .inicio-sesion
+    display: flex
+    flex-direction: column
+    label
+      margin-top: 1rem
+    input
+      height: 2rem
+      padding-left: 5px
+    a
+      font-size: .7rem
+      margin-top: 5px
+      text-decoration: none
+      color: black
+      cursor: pointer
+    div
+      margin: 1rem 0
+      display: flex
+      flex-direction: row
+    #submitIS
+      margin-top: 1rem
+      border-radius: 5px
+      border: none
+      background: #bb1e26
+      color: white
+      font-size: 1rem
+
+
+
+
+.mainPublicar
+    width: 100%
+    display: flex
+    justify-content: center
+    margin: 2rem 0
+    form
+      width: 28%
+      border: .5px solid gray
+      padding: 1.5rem 3rem
+      border-radius: 1rem
+      display: flex
+      flex-direction: column
+      h1
+        text-align: center
+        font-weight: 600
+      select
+        height: 2rem
+      input,textarea,select
+        padding-left: 8px
+      input
+          height: 2rem
+          width: 100%
+      textarea
+        resize: vertical
+        height: 25vh
+        padding-top: 8px
+      label
+        margin-top: 2rem
+
+      #inputEnviar
+        border: none
+        border-radius: 5px
+        cursor: pointer
+        margin-top: 2rem
+        transition: .3s
+        background: #bb1e26
+        color: white
+        width: 35%
+
+        &:hover
+          background: #861e23
+      #label1
+        margin-top: 1rem
+
+      #arrastrarImagen
+        opacity: 1
+        border: 2px dashed grey
+        display: flex
+        justify-content: center
+        align-items: center
+        flex-direction: column 
+        margin-top: 2rem
+        padding: 3rem 0
+        #inputFile
+          opacity: 0
+          padding-left: 0   
+          position: absolute 
+        div
+          text-align: center
+
+
+    #file
+      width: 200px
+      background: red
+      padding: 1rem
+    

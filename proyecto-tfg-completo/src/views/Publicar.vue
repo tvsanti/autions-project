@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import HeaderVue from "./components/HeaderVue.vue";
-import PublicarVue from "./components/PublicarVue.vue";
+import HeaderVue from "../components/HeaderVue.vue";
+import PublicarVue from "../components/Publicar/PublicarVue";
 
 export default {
   name: "App",
