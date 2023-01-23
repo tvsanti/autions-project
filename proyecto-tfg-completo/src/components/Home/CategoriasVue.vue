@@ -5,14 +5,22 @@
     <div class="categorias">
       <div>
         <div v-for="item in items" :key="item">
-          <h4>{{ item.titulo }}</h4>
-          <i :class="item.icon"></i>
+          <router-link :to="{name: 'BuscarId', params: { id: item.titulo, },}">
+          <!-- <router-link to="/buscar"> -->
+            <h4>{{ item.titulo }}</h4>
+            <i :class="item.icon"></i>
+          </router-link>
         </div>
       </div>
-      <button v-if="items.length === 8" @click="anadirCategorias()">{{ titulo }}</button>
-      <button v-else-if="items.length === 12" @click="borrarCategoria()">{{ titulo }}</button>
+      <button v-if="items.length === 8" @click="anadirCategorias()">
+        {{ titulo }}
+      </button>
+      <button v-else-if="items.length === 12" @click="borrarCategoria()">
+        {{ titulo }}
+      </button>
     </div>
   </div>
+  <router-view />
 </template>
 
 <script>
@@ -73,20 +81,19 @@ export default {
           icon: "fas fa-plug",
         },
       ],
-      titulo: 'Más categorias'
+      titulo: "Más categorias",
     };
   },
   methods: {
     anadirCategorias() {
-      this.masCategorias.map(i => this.items.push(i))
-      this.titulo = "Ver menos"
+      this.masCategorias.map((i) => this.items.push(i));
+      this.titulo = "Ver menos";
     },
     borrarCategoria() {
-      this.masCategorias.map(i => this.items.pop(i))
-      this.titulo = "Más categorias"
-
-    }
-  }
+      this.masCategorias.map((i) => this.items.pop(i));
+      this.titulo = "Más categorias";
+    },
+  },
 };
 </script>
 
