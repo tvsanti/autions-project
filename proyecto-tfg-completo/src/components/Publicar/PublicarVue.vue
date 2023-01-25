@@ -21,13 +21,12 @@
             <label for="">Precio</label>
             <input type="number">
             <div id="arrastrarImagen">
-                <input id="inputFile" type="file" >
-                <div>
-                    <i></i>
+                <label for="inputFile">
                     <h3>Arrastrar fotos</h3>
                     <h3>- o -</h3>
                     <h3>Seleccionar fotos</h3>
-                </div>
+                </label>
+                <input id="inputFile" accept=".jpg, .jpeg, .png" multiple type="file" >
             </div>
             <input id="inputEnviar" type="submit" value="Publicar">
         </form>

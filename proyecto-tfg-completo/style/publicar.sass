@@ -17,7 +17,6 @@
 
 header
   @include displayFlex(row,space-around,center)
-  
   width: 100%
   input
     padding-left: 8px
@@ -115,9 +114,10 @@ header
     width: 100%
     display: flex
     justify-content: center
-    margin: 2rem 0
     form
-      width: 28%
+      margin-top: 18vh
+      margin-bottom: 4vh
+      width: 30%
       border: .5px solid gray
       padding: 1.5rem 3rem
       border-radius: 1rem
@@ -163,12 +163,13 @@ header
         align-items: center
         flex-direction: column 
         margin-top: 2rem
-        padding: 3rem 0
         #inputFile
-          opacity: 0
-          padding-left: 0   
-          position: absolute 
-        div
+          opacity: 1
+          display: none
+        label
+          margin: 0
+          width: 100%
+          padding: 4rem 0
           text-align: center
 
 
