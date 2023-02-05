@@ -2,21 +2,25 @@
   <div class="productosVue">
     <div class="productoVue">
       <div class="productoVfor" v-for="item in items" :key="item">
-        <img :src="item.urlImg" alt="" />
-        <div class="productoDescripcion">
-          <div>
-            <span>{{ item.titulo }}</span>
-            <h4 id="productoPrecio">{{ item.precio }}</h4>
+        <router-link :to="{name: 'Subasta', params: { id: item.titulo, },}">
+          <img :src="item.urlImg" alt="" />
+        </router-link>
+          <div class="productoDescripcion">
+            <div>
+              <span>{{ item.titulo }}</span>
+              <h4 id="productoPrecio">{{ item.precio }}</h4>
+            </div>
+            <i @click="getApiData()" class="fa-regular fa-heart"></i>
           </div>
-          <i @click="getApiData()" class="fa-regular fa-heart"></i>
-        </div>
       </div>
     </div>
   </div>
+  <router-view />
+
 </template>
 
 <script>
-const axios = require('axios')
+const axios = require("axios");
 export default {
   name: "ProductosVue",
   data() {
@@ -118,10 +122,10 @@ export default {
   },
   methods: {
     async getApiData() {
-      const response = await axios.get("http://localhost:3000/")
+      const response = await axios.get("http://localhost:3000/");
       console.log(response.data);
-    }
-  }
+    },
+  },
 };
 </script>
 

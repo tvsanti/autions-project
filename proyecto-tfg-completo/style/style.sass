@@ -1,4 +1,4 @@
-:root 
+:root
   --select-border: #777
   --select-focus: blue
   --select-arrow: var(--select-border)
@@ -311,14 +311,17 @@ main
       flex-wrap: wrap
 
       .productoVfor
-        cursor: pointer
         display: flex
         flex-direction: column
         width: 21%
         margin: 2rem 2rem
-        img
-          border-radius: 1rem
-          width: 100%
+        a
+          text-decoration: none
+          color: black
+          img
+            cursor: pointer
+            border-radius: 1rem
+            width: 100%
         .productoDescripcion
           display: flex
           justify-content: space-between
@@ -329,10 +332,124 @@ main
               font-weight: 600
               margin: .5rem 0
           i
+            cursor: pointer
             font-size: 1.4rem
             margin: .5rem 0
             margin-top: 1rem
             color: #bb1e26
+
+.subastaVue
+  display: flex
+  flex-direction: row
+  justify-content: center
+  padding: 1rem 8rem
+  width: 100%
+  .menuSubasta
+    display: flex
+    flex-direction: column
+    width: 40%
+
+    .valoracionUser
+      margin-bottom: 1rem
+      display: flex
+      flex-direction: row
+      align-items: center
+      i
+        font-size: 1.8rem
+      .perfilUser
+        display: flex
+        align-items: center
+        img
+          width: 8%
+          height: 90%
+          border-radius: 50%
+        .infoUser
+          margin-left: 1rem
+          h4
+            font-weight: 400
+
+    .descripcion
+      background-color: #e0e0e0
+      padding: 1rem 1.5rem
+      border-radius: .3rem
+      margin: 1rem 0
+      margin-bottom: 2rem
+
+      p
+        margin: 1rem 0
+        font-weight: 300
+        b
+          font-weight: 600
+      h1
+        font-weight: 500
+      h4
+        font-size: 1.3rem
+        font-weight: 500
+        margin-top: 1.3rem
+        b
+          font-weight: 600
+    .pujar
+      h2
+        font-weight: 400
+        b
+          font-weight: 600
+      div
+        button
+          @include buttonStyle()
+          padding: 5px 2rem
+          background: #bb1e26
+          border-radius: .5rem
+          margin-left: 1rem
+          color: white
+
+        input
+          margin-top: 1rem
+          padding-left: 8px
+          border-radius: .5rem
+          border: 1px solid #888888
+          height: 2rem
+          width: 60%
+          background: white
+
+  .imgs
+    margin-right: 3rem
+    display: flex
+    flex-direction: row
+    #big-img
+      width: 600px
+    .select-img
+      display: flex
+      flex-direction: column
+      gap: 1.5rem
+      img
+        height: 170px
+        margin-right: 1.5rem
+
+.masProductos
+  display: flex
+  justify-content: center
+  align-items: center
+  flex-direction: column
+  margin-top: 5rem
+  margin-bottom: 2rem
+  padding: 1rem 8rem
+
+  h1
+    margin-bottom: 2rem
+  .masProductos2
+    display: flex
+    flex-direction: row
+    div
+      margin: 0 2rem
+      img
+        width: 15rem
+
+      h2
+        font-weight: 600
+      h3
+        font-weight: 500
+      p
+        max-width: 100%
 
 footer
   @include displayFlex(row,center,center)
