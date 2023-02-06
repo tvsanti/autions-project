@@ -6,7 +6,7 @@
       <img src="../../../img/logo1.png" alt="">
     </router-link>
     <div class="header-buttons">
-      <button @click="() => TogglePopup()">
+      <button @click="TogglePopup()">
         Iniciar sesión | Registrarse
       </button>
       

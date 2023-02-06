@@ -25,10 +25,10 @@
           <h3>Arrastrar fotos</h3>
           <h3>- o -</h3>
           <h3>Seleccionar fotos</h3>
-          <img :src="nombreImg" alt="">
         </label>
         <input id="inputFile" type="file" multiple @change="previewFiles" />
       </div>
+      <span>Fotos seleccionadas: <b>{{ numeroFotos }}</b></span>
       <input id="inputEnviar" type="submit" value="Publicar" />
     </form>
   </div>
@@ -38,18 +38,13 @@
 export default {
     data() {
         return {
-            nombreImg: ''
+            numeroFotos: 0
         }
     },
     methods: {
     previewFiles(event) {
         const files = event.target.files
-        if (!files.length) return
-
-        const reader = new FileReader()
-        reader.readAsDataURL(files[0])
-        
-        reader.onload = () => (this.nombreImg = reader.result)
+        this.numeroFotos = files.length
     },
   },
 };

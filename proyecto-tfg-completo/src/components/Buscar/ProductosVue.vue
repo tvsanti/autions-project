@@ -20,7 +20,6 @@
 </template>
 
 <script>
-const axios = require("axios");
 export default {
   name: "ProductosVue",
   data() {
@@ -119,12 +118,6 @@ export default {
         },
       ],
     };
-  },
-  methods: {
-    async getApiData() {
-      const response = await axios.get("http://localhost:3000/");
-      console.log(response.data);
-    },
   },
 };
 </script>
