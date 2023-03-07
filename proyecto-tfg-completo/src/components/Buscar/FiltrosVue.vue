@@ -48,6 +48,9 @@
             class="fa-solid fa-caret-left flechaIcono"
           ></i>
         </div>
+        <div :class="{ mostarLi3: animacionActiva3 }" class="mostrarLi">
+          <input value='1000' min='1000' max='50000' step='500' type="range">
+        </div>
       </div>
       <div class="filtroLi">
         <div class="filtro2">
@@ -59,6 +62,14 @@
             @click="rotarIconos4()"
             class="fa-solid fa-caret-left flechaIcono"
           ></i>
+        </div>
+        <div :class="{ mostarLi4: animacionActiva4 }" class="mostrarLi">
+          <select name="" id="">
+            <option value="">1</option>
+            <option value="">1</option>
+            <option value="">1</option>
+            <option value="">1</option>
+          </select>        
         </div>
       </div>
     </ul>
