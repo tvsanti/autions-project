@@ -49,73 +49,7 @@ export default {
             "https://static.zarahome.net/8/photos4/2022/I/4/1/p/2383/046/400/2383046400_1_1_3.jpg?t=1669111568995",
           precio: "25€",
           titulo: "Esto es un producto de prueba",
-        },
-        {
-          urlImg:
-            "https://static.zarahome.net/8/photos4/2022/I/4/1/p/2383/046/400/2383046400_1_1_3.jpg?t=1669111568995",
-          precio: "25€",
-          titulo: "Esto es un producto de prueba",
-        },
-        {
-          urlImg:
-            "https://static.zarahome.net/8/photos4/2022/I/4/1/p/2383/046/400/2383046400_1_1_3.jpg?t=1669111568995",
-          precio: "25€",
-          titulo: "Esto es un producto de prueba",
-        },
-        {
-          urlImg:
-            "https://static.zarahome.net/8/photos4/2022/I/4/1/p/2383/046/400/2383046400_1_1_3.jpg?t=1669111568995",
-          precio: "25€",
-          titulo: "Esto es un producto de prueba",
-        },
-        {
-          urlImg:
-            "https://static.zarahome.net/8/photos4/2022/I/4/1/p/2383/046/400/2383046400_1_1_3.jpg?t=1669111568995",
-          precio: "25€",
-          titulo: "Esto es un producto de prueba",
-        },
-        {
-          urlImg:
-            "https://static.zarahome.net/8/photos4/2022/I/4/1/p/2383/046/400/2383046400_1_1_3.jpg?t=1669111568995",
-          precio: "25€",
-          titulo: "Esto es un producto de prueba",
-        },
-        {
-          urlImg:
-            "https://static.zarahome.net/8/photos4/2022/I/4/1/p/2383/046/400/2383046400_1_1_3.jpg?t=1669111568995",
-          precio: "25€",
-          titulo: "Esto es un producto de prueba",
-        },
-        {
-          urlImg:
-            "https://static.zarahome.net/8/photos4/2022/I/4/1/p/2383/046/400/2383046400_1_1_3.jpg?t=1669111568995",
-          precio: "25€",
-          titulo: "Esto es un producto de prueba",
-        },
-        {
-          urlImg:
-            "https://static.zarahome.net/8/photos4/2022/I/4/1/p/2383/046/400/2383046400_1_1_3.jpg?t=1669111568995",
-          precio: "25€",
-          titulo: "Esto es un producto de prueba",
-        },
-        {
-          urlImg:
-            "https://static.zarahome.net/8/photos4/2022/I/4/1/p/2383/046/400/2383046400_1_1_3.jpg?t=1669111568995",
-          precio: "25€",
-          titulo: "Esto es un producto de prueba",
-        },
-        {
-          urlImg:
-            "https://static.zarahome.net/8/photos4/2022/I/4/1/p/2383/046/400/2383046400_1_1_3.jpg?t=1669111568995",
-          precio: "25€",
-          titulo: "Esto es un producto de prueba",
-        },
-        {
-          urlImg:
-            "https://static.zarahome.net/8/photos4/2022/I/4/1/p/2383/046/400/2383046400_1_1_3.jpg?t=1669111568995",
-          precio: "25€",
-          titulo: "Esto es un producto de prueba",
-        },
+        }
       ],
     };
   },
