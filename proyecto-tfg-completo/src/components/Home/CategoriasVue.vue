@@ -4,7 +4,7 @@
     <h3>Descuble todas nuestras categorias</h3>
     <div class="categorias">
       <div>
-        <div v-for="item in items" :key="item">
+        <div v-for="item in $store.state.items" :key="item">
           <router-link :to="{name: 'BuscarId', params: { id: item.titulo, },}">
           <!-- <router-link to="/buscar"> -->
             <h4>{{ item.titulo }}</h4>
@@ -12,11 +12,11 @@
           </router-link>
         </div>
       </div>
-      <button v-if="items.length === 8" @click="anadirCategorias()">
-        {{ titulo }}
+      <button v-if="$store.state.items.length === 8" @click="anadirCategorias()">
+        {{ $store.state.titulo }}
       </button>
-      <button v-else-if="items.length === 12" @click="borrarCategoria()">
-        {{ titulo }}
+      <button v-else-if="$store.state.items.length === 12" @click="borrarCategoria()">
+        {{ $store.state.titulo }}
       </button>
     </div>
   </div>
@@ -26,72 +26,12 @@
 <script>
 export default {
   name: "CategoriasVue",
-  data() {
-    return {
-      isActive: true,
-      items: [
-        {
-          titulo: "Todas las categorias",
-          icon: "fas fa-eye",
-        },
-        {
-          titulo: "Motor",
-          icon: "fas fa-car",
-        },
-        {
-          titulo: "Moda y accesorios",
-          icon: "fas fa-shirt",
-        },
-        {
-          titulo: "Consolas y Videojuegos",
-          icon: "fas fa-gamepad",
-        },
-        {
-          titulo: "Bicicletas",
-          icon: "fas fa-bicycle",
-        },
-        {
-          titulo: "Hogar y jardín",
-          icon: "fas fa-couch",
-        },
-        {
-          titulo: "Inmobiliaria",
-          icon: "fas fa-house",
-        },
-        {
-          titulo: "TV, audio y foto",
-          icon: "fas fa-tv",
-        },
-      ],
-      masCategorias: [
-        {
-          titulo: "Teléfonos móbiles",
-          icon: "fas fa-mobile",
-        },
-        {
-          titulo: "Informática",
-          icon: "fas fa-computer",
-        },
-        {
-          titulo: "Deporte",
-          icon: "fas fa-basketball",
-        },
-        {
-          titulo: "Electrodomésticos",
-          icon: "fas fa-plug",
-        },
-      ],
-      titulo: "Más categorias",
-    };
-  },
   methods: {
     anadirCategorias() {
-      this.masCategorias.map((i) => this.items.push(i));
-      this.titulo = "Ver menos";
+      this.$store.dispatch('anadirCategoriaVuex')
     },
     borrarCategoria() {
-      this.masCategorias.map((i) => this.items.pop(i));
-      this.titulo = "Más categorias";
+      this.$store.dispatch('borrarCategoriaVuex')
     },
   },
 };

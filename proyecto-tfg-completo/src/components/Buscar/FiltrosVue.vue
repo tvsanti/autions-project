@@ -1,5 +1,8 @@
 <template>
-  <localizacion-popup v-if="buttonTrigger" :ToggleLocalizacion="() => ToggleLocalizacion()"/>
+  <localizacion-popup
+    v-if="buttonTrigger"
+    :ToggleLocalizacion="() => ToggleLocalizacion()"
+  />
   <div class="filtrosVue">
     <ul class="ul1">
       <div class="filtroLi">
@@ -13,10 +16,13 @@
         </div>
         <div :class="{ mostarLi2: animacionActiva1 }" class="mostrarLi">
           <select name="" id="">
-            <option value="">1</option>
-            <option value="">1</option>
-            <option value="">1</option>
-            <option value="">1</option>
+            <option
+              v-for="item in $store.state.itemsCompleta"
+              :key="item"
+              value=""
+            >
+              {{ item.titulo }}
+            </option>
           </select>
         </div>
       </div>
@@ -49,7 +55,7 @@
           ></i>
         </div>
         <div :class="{ mostarLi3: animacionActiva3 }" class="mostrarLi">
-          <input value='1000' min='1000' max='50000' step='500' type="range">
+          <input value="1000" min="1000" max="50000" step="500" type="range" />
         </div>
       </div>
       <div class="filtroLi">
@@ -65,11 +71,12 @@
         </div>
         <div :class="{ mostarLi4: animacionActiva4 }" class="mostrarLi">
           <select name="" id="">
-            <option value="">1</option>
-            <option value="">1</option>
-            <option value="">1</option>
-            <option value="">1</option>
-          </select>        
+            <option value="">Nuevo con etiqueta</option>
+            <option value="">Nuevo sin etiqueta</option>
+            <option value="">Muy bueno</option>
+            <option value="">Bueno</option>
+            <option value="">Satisfactorio</option>
+          </select>
         </div>
       </div>
     </ul>
@@ -80,26 +87,25 @@
 </template>
 
 <script>
-import LocalizacionPopup from '../Localizacion/LocalizacionPopup.vue';
+import LocalizacionPopup from "../Localizacion/LocalizacionPopup.vue";
 
 export default {
   name: "App",
-  components: { 
-    LocalizacionPopup
-   },
+  components: {
+    LocalizacionPopup,
+  },
   data() {
     return {
       animacionActiva1: false,
       animacionActiva2: false,
       animacionActiva3: false,
       animacionActiva4: false,
-      buttonTrigger: false
+      buttonTrigger: false,
     };
   },
   methods: {
     ToggleLocalizacion() {
-      this.buttonTrigger = !this.buttonTrigger
-
+      this.buttonTrigger = !this.buttonTrigger;
     },
     rotarIconos1() {
       this.animacionActiva1 = !this.animacionActiva1;
