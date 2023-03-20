@@ -11,30 +11,29 @@
       <form
         v-if="registerToggle === 'loggin'"
         class="inicio-sesion"
-        action=""
-        method="post"
+        @submit.prevent="loginPost"
       >
         <label>Email</label>
-        <input type="text" />
+        <input v-model="formularioLogin.mail" type="text" />
         <label>Contraseña</label>
-        <input type="password" />
+        <input v-model="formularioLogin.password" type="password" />
         <a href="">¿Has olvidado la contraseña?</a>
         <input id="submitIS" type="submit" value="Iniciar sesión" />
       </form>
       <form
         v-else-if="registerToggle === 'register'"
         class="inicio-sesion"
-        action=""
+        @submit.prevent="registerPost"
         method="post"
       >
         <label>Nombre</label>
-        <input type="text" />
+        <input required v-model="formularioRegister.nombre" type="text" />
         <label>Email</label>
-        <input type="text" />
+        <input required v-model="formularioRegister.mail" type="text" />
         <label>Contraseña</label>
-        <input type="password" />
+        <input required v-model="formularioRegister.password" type="password" />
         <div>
-          <input type="checkbox" name="" id="" />Acepto las condiciones de uso y
+          <input required type="checkbox" name="" id="" />Acepto las condiciones de uso y
           la información básica sobre protección de datos.
         </div>
         <input id="submitIS" type="submit" value="Registrarse" />
@@ -44,11 +43,22 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   props: ["TogglePopup"],
   data() {
     return {
       registerToggle: "loggin",
+      formularioLogin: {
+        mail: '',
+        password: ''
+      },
+      formularioRegister: {
+        nombre: '',
+        mail: '',
+        password: '',
+      },
     };
   },
   methods: {
@@ -58,6 +68,12 @@ export default {
     setRegister() {
       this.registerToggle = "register";
     },
+    async registerPost() {
+      await axios
+        .post("http://localhost:3001/login", this.formularioRegister)
+        .then((res) => console.log(res));
+    },
+
   },
 };
 </script>

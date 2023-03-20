@@ -3,7 +3,7 @@
     <form @submit.prevent="createPost">
       <h1>Publicar producto</h1>
       <label id="label1" for="">Categoria</label>
-      <select v-model="formulario.categoria" id="">
+      <select required v-model="formulario.categoria" id="">
         <option
           v-for="item in $store.state.itemsCompleta"
           :key="item"
@@ -30,6 +30,10 @@
           {{ estado.estado }}
         </option>
       </select>
+      
+      <label for="">Fechas expiracion</label>
+      <input v-model="formulario.precio" type="time" />
+      
       <label for="">Precio</label>
       <input v-model="formulario.precio" type="number" />
       <div id="arrastrarImagen">
