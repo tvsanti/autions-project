@@ -7,12 +7,15 @@ const connection = db()
 
 
 router.get('/api', async (req, res) => {
-    const [results] = await connection.query('SELECT * FROM producto')
-    res.json(results);
+    try {
+        const [results] = await connection.query('SELECT * FROM producto')
+        res.json(results);
+    } catch (error) {
+        res.status(404).send("Error")
+    }
 })
 
 router.post('/api', async(req, res) => {
-    console.log(req.body);
     const objeto = {
         title: req.body.titulo,
         description: req.body.descripcion,
@@ -23,23 +26,24 @@ router.post('/api', async(req, res) => {
         created_by: req.query.id_user,
         categoria: req.body.categoria,
     }
-    const [results] = await connection.query('INSERT INTO producto SET ?',[objeto])
-    console.log(results);
-    res.send(results)
+    try {
+        const [results] = await connection.query('INSERT INTO producto SET ?',[objeto])
+        res.send(results)
+    } catch (error) {
+        res.status(404).send(error)
+    }
 })
 
 router.post('/login', async(req, res) => {
     try {
         const objeto = req.body
         const [mailExists] =  await connection.query('SELECT mail FROM cliente')
-        console.log(mailExists);
-        console.log(123);
         if (mailExists.length < 1) {
             const [results] = await connection.query('INSERT INTO cliente SET ?',[objeto])
             res.send(results)
         }
     } catch (error) {
-        res.send(error)
+        res.status(404).send(error)
     }
 })
 
