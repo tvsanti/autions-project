@@ -2,17 +2,15 @@ const express = require("express")
 const app = express();
 const Router = require("./routes/routes.js")
 const cors = require("cors")
-const session = require('express-session')
+const cookieParser = require('cookie-parser')
 
-app.use(express.json());
-app.use(session({
-    secret: 'secretsession',
-    cookie: {
-        sameSite: 'strict',
-    }
 
-}))
+
+app.use(express.urlencoded({ extended: false }))
+app.use(express.json())
+app.use(cookieParser())
+
 app.use(cors());
-app.use('/',Router);
+app.use('/', Router);
 
-app.listen(3001, () => console.log('Servidor http://localhost:3001'));
+app.listen(3001, () => console.log('Servidor http://localhost:3001/api'));

@@ -4,8 +4,6 @@ const db = require('../database')
 const connection = db()
 
 
-
-
 router.get('/api', async (req, res) => {
     try {
         const [results] = await connection.query('SELECT * FROM producto')
@@ -28,7 +26,20 @@ router.post('/api', async(req, res) => {
     }
     try {
         const [results] = await connection.query('INSERT INTO producto SET ?',[objeto])
-        res.send(results)
+        res.send(results)  
+    } catch (error) {
+        res.status(404).send(error)
+    }
+})
+
+router.post('/register', async(req, res) => {
+    try {
+        const objeto = req.body
+        const [mailExists] =  await connection.query('SELECT mail FROM cliente')
+        if (mailExists.length < 1) {
+            const [results] = await connection.query('INSERT INTO cliente SET ?',[objeto])
+            res.send(results)
+        }
     } catch (error) {
         res.status(404).send(error)
     }
@@ -37,11 +48,10 @@ router.post('/api', async(req, res) => {
 router.post('/login', async(req, res) => {
     try {
         const objeto = req.body
-        const [mailExists] =  await connection.query('SELECT mail FROM cliente')
-        if (mailExists.length < 1) {
-            const [results] = await connection.query('INSERT INTO cliente SET ?',[objeto])
-            res.send(results)
-        }
+        const [response] = await connection.query('SELECT * FROM cliente WHERE mail = ? AND password = ?',[objeto.mail, objeto.password])
+        
+        res.send(JSON.stringify(response[0]))
+
     } catch (error) {
         res.status(404).send(error)
     }

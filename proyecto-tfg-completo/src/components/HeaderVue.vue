@@ -6,8 +6,11 @@
       <img src="../../../img/logo1.png" alt="">
     </router-link>
     <div class="header-buttons">
-      <button @click="TogglePopup()">
+      <button v-if="!$cookies.get('loginCookie')" @click="TogglePopup()">
         Iniciar sesión | Registrarse
+      </button>
+      <button v-else-if="$cookies.get('loginCookie')" @click="LogOut()">
+        Log Out
       </button>
       
       <router-link to="/publicar">
@@ -36,6 +39,10 @@ export default {
   methods: {
     TogglePopup() {
       this.buttonTrigger = !this.buttonTrigger
+    },
+    LogOut() {
+      this.$cookies.remove('loginCookie')
+      this.$forceUpdate()
     }
   }
 };
