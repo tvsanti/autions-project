@@ -3,16 +3,16 @@
     <h1>Que és Balú?</h1>
     <div>
       <div>
-          <h2>Lorem ipsum solor sit</h2>
-          <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae repellat adipisci deserunt beatae architecto, porro nostrum animi eveniet. Deserunt, omnis pariatur. Reprehenderit </p>
+          <h2>Emociónate con Balú</h2>
+          <p class="descripcionBalu">Descubre las subastas más emocionantes en línea con Balú. Encuentra una amplia variedad de artículos en oferta y sigue en tiempo real las pujas de otros usuarios</p>
       </div>
       <div>
-          <h2>Lorem ipsum solor sit</h2>
-          <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae repellat adipisci deserunt beatae architecto, porro nostrum animi eveniet. Deserunt, omnis pariatur. Reprehenderit </p>
+          <h2>Consigue las mejores ofertas en Balú</h2>
+          <p class="descripcionBalu">Ahorra dinero y consigue objetos únicos en las subastas online de Balú. Descubre una gran selección de artículos de alta calidad a precios increíbles.</p>
       </div>
       <div>
-          <h2>Lorem ipsum solor sit</h2>
-          <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repudiandae repellat adipisci deserunt beatae architecto, porro nostrum animi eveniet. Deserunt, omnis pariatur. Reprehenderit </p>
+          <h2>Vende tus objetos en Balú</h2>
+          <p class="descripcionBalu">Vende tus objetos de forma fácil y segura en Balú. Únete a una comunidad de compradores y vendedores de todo el mundo y comienza a ganar dinero hoy mismo.</p>
       </div>
     </div>
   </div>
@@ -25,5 +25,7 @@ export default {
 </script>
 
 <style lang="sass">
-
+.descripcionBalu
+  font-size: 1rem
+  font-weight: 400
 </style>

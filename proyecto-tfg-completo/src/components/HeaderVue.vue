@@ -13,11 +13,14 @@
         Log Out
       </button>
       
-      <router-link to="/publicar">
+      <router-link v-if="$cookies.get('loginCookie')" to="/publicar">
         <button class="button-color">
           <i class="fa-solid fa-circle-plus"></i>Publicar
         </button>
       </router-link>
+      <button v-else @click="TogglePopup()" class="button-color">
+        <i class="fa-solid fa-circle-plus"></i>Publicar
+      </button>
     </div>
   </header>
 </template>
