@@ -86,7 +86,9 @@ export default {
       await axios.post('http://localhost:3001/api/localImages', formImages);
     },
     onFileChange(event) {
+      let cookie = this.$cookies.get('loginCookie')
       const files = this.$refs.files.files
+      this.formulario.rutaImgPortada = `images/${cookie.id_cliente}/${files[0].name}`
       this.files = [...this.files, ...files]
       let imagenes = event.target.files
       this.numeroFotos = imagenes.length

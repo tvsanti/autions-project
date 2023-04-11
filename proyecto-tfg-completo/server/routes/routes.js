@@ -9,7 +9,7 @@ const fs = require('fs')
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        const folderPath = `../src/components/Buscar/images/${app.locals.id}`;
+        const folderPath = `../public/images/${app.locals.id}`;
         fs.mkdirSync(folderPath, { recursive: true });
         cb(null, folderPath)
     },
@@ -46,10 +46,8 @@ router.get('/api', async (req, res) => {
 
 router.post('/api', async (req, res) => {
     let directoryPath = `../public/images/${req.body.created_by}`
-    const files = await fs.promises.readdir(directoryPath)
-    console.log(files);
-    req.body.rutaImg = '/'+req.body.rutaImg+'/'+files[0]
-    console.log(req.body.rutaImg,1);
+    fs.mkdirSync(directoryPath, { recursive: true });
+    req.body.rutaImg = '/'+req.body.rutaImgPortada
     const objeto = {
         title: req.body.titulo,
         description: req.body.descripcion,
