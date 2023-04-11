@@ -9,7 +9,7 @@ const fs = require('fs')
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        const folderPath = `images/${app.locals.id}`;
+        const folderPath = `../src/components/Buscar/images/${app.locals.id}`;
         fs.mkdirSync(folderPath, { recursive: true });
         cb(null, folderPath)
     },
@@ -17,8 +17,24 @@ const storage = multer.diskStorage({
         cb(null, file.originalname)
     }
 })
-const upload = multer({storage: storage})
+const upload = multer({ storage: storage })
 
+router.get('/api', async (req, res) => {
+    try {
+        const [results] = await connection.query('SELECT * FROM producto')
+        res.json(results);
+    } catch (error) {
+        res.status(404).send("Error")
+    }
+})
+router.get('/api/:id', async (req, res) => {
+    try {
+        const [results] = await connection.query('SELECT * FROM producto WHERE categoria = ?', [req.params.id])
+        res.json(results);
+    } catch (error) {
+        res.status(404).send("Error")
+    }
+})
 router.get('/api', async (req, res) => {
     try {
         const [results] = await connection.query('SELECT * FROM producto')
@@ -29,6 +45,11 @@ router.get('/api', async (req, res) => {
 })
 
 router.post('/api', async (req, res) => {
+    let directoryPath = `../public/images/${req.body.created_by}`
+    const files = await fs.promises.readdir(directoryPath)
+    console.log(files);
+    req.body.rutaImg = '/'+req.body.rutaImg+'/'+files[0]
+    console.log(req.body.rutaImg,1);
     const objeto = {
         title: req.body.titulo,
         description: req.body.descripcion,
@@ -50,7 +71,7 @@ router.post('/api', async (req, res) => {
 })
 
 router.post("/api/localImages", upload.array('files'), async (req, res) => {
-    res.json({files: req.files})
+    res.json({ files: req.files })
 
 });
 
