@@ -31,7 +31,7 @@ const router = createRouter({
             name: 'BuscarId'
         },
         {
-            path: '/subasta/:id',
+            path: '/subasta/:id/:categoria/:titulo',
             component: Subasta,
             name: 'Subasta'
         },

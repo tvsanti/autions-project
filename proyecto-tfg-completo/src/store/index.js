@@ -1,6 +1,7 @@
 import { createStore } from 'vuex'
 export default createStore({
     state: {
+        count: 0,
         isActive: true,
         titulo: "Más categorias",
         items: [
@@ -135,6 +136,12 @@ export default createStore({
             state.masCategorias.map((i) => state.items.pop(i));
             state.titulo = "Más categorias";
         },
+        SOCKET_COUNTER_INCREMENT(state, counter) {
+            state.count = counter
+        },
+        SOCKET_COUNTER_DECREMENT(state, counter) {
+            state.count = counter
+        }
     },
     actions: {
         anadirCategoriaVuex(context) {
@@ -142,7 +149,13 @@ export default createStore({
         },
         borrarCategoriaVuex(context) {
             context.commit('borrarCategoria')
-        }
+        },
+        socket_increment:({state, rootState}) => {
+            rootState.io.emit('increment', state.count)
+        }, 
+        socket_decrement:({state, rootState}) => {
+            rootState.io.emit('decrement', state.count)
+        } 
     },
     modules: {
     }

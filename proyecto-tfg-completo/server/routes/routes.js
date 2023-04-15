@@ -18,7 +18,6 @@ const storage = multer.diskStorage({
     }
 })
 const upload = multer({ storage: storage })
-
 router.get('/api', async (req, res) => {
     try {
         const [results] = await connection.query('SELECT * FROM producto')
@@ -27,6 +26,7 @@ router.get('/api', async (req, res) => {
         res.status(404).send("Error")
     }
 })
+
 router.get('/api/:id', async (req, res) => {
     try {
         const [results] = await connection.query('SELECT * FROM producto WHERE categoria = ?', [req.params.id])
@@ -35,14 +35,25 @@ router.get('/api/:id', async (req, res) => {
         res.status(404).send("Error")
     }
 })
-router.get('/api', async (req, res) => {
+
+router.get('/subasta/:id/:categoria/:titulo', async(req, res) => {
     try {
-        const [results] = await connection.query('SELECT * FROM producto')
+        const [results] = await connection.query('SELECT * FROM producto WHERE id_producto = ? and categoria = ? and title = ?', [req.params.id,req.params.categoria,req.params.titulo])
         res.json(results);
     } catch (error) {
+        console.log('Error');
         res.status(404).send("Error")
-    }
+    }  
 })
+router.get('/subasta/:id/', async(req, res) => {
+    const folderPath = `../public/images/${req.params.id}`;
+    fs.readdir(folderPath, (err, files) => {
+        files = files.map(i => `/images/${req.params.id}/${i}`)
+        res.send(files)
+      });
+      
+})
+
 
 router.post('/api', async (req, res) => {
     let directoryPath = `../public/images/${req.body.created_by}`
@@ -52,7 +63,7 @@ router.post('/api', async (req, res) => {
         title: req.body.titulo,
         description: req.body.descripcion,
         condition: req.body.estado,
-        time_left: '2020/01/01',
+        time_left: new Date(),
         price: req.body.precio,
         img: req.body.rutaImg,
         created_by: req.body.created_by,
