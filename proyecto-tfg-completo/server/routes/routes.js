@@ -45,6 +45,17 @@ router.get('/subasta/:id/:categoria/:titulo', async(req, res) => {
         res.status(404).send("Error")
     }  
 })
+router.post('/subasta/:id/:categoria/:titulo', async(req, res) => {
+    try {
+        console.log(req.body, req.params)
+        const [results] = await connection.query('UPDATE producto SET price = ? WHERE id_producto = ? ', [req.body.price, req.params.id])
+        res.json(results);
+    } catch (error) {
+        console.error(error);
+        res.status(404).send("Error")
+    }  
+})
+
 router.get('/subasta/:id/', async(req, res) => {
     const folderPath = `../public/images/${req.params.id}`;
     fs.readdir(folderPath, (err, files) => {

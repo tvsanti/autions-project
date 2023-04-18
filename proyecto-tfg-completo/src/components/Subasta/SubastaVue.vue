@@ -40,7 +40,7 @@
         </h4>
       </div>
       <div class="pujar">
-        <h2>Puja actual: <b>{{ prouctContent.price }}€</b></h2>
+        <h2>Puja actual: {{ userPuja }} <b>{{ prouctContent.price }}€</b></h2>
         <div>
           <input type="text" placeholder="Importe de puja" />
           <button @click="pujar">Pujar</button>
@@ -111,10 +111,11 @@ export default {
       arraySeleccionada: 0,
       prouctContent: [],
       socket: null,
+      userPuja: ''
     };
   },
   methods: {
-    pujar() {
+    async pujar() {
       const importe = document.querySelector('input[type="text"]').value;
       const data = {
         importe: importe,
@@ -122,6 +123,9 @@ export default {
         id_cliente: this.$cookies.get('loginCookie').id_cliente
       };
       this.socket.emit("puja", data);
+      
+      await axios
+        .post(`http://localhost:3001/subasta/${this.$route.params.id}/${this.$route.params.categoria}/${this.$route.params.titulo}`, {price: importe});
     },
   },
   async mounted() {
@@ -129,6 +133,7 @@ export default {
     this.socket.on("puja", (data) => {
       console.log(data); // se reciben los datos de la puja realizada
       this.prouctContent.price = data.importe
+      this.userPuja = data.user
       // actualizar la puja actual en el frontend con los datos recibidos
     });
     await axios
