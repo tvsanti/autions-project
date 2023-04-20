@@ -31,9 +31,9 @@
         </option>
       </select>
       
-      <!-- <label for="">Fechas expiracion</label>
-      <input v-model="formulario.precio" type="time" />
-       -->
+      <label for="">Fin de la subasta</label>
+      <input v-model="formulario.time_left" type="datetime-local" />
+      
       <label for="">Precio</label>
       <input v-model="formulario.precio" type="number" />
       <div id="arrastrarImagen">
@@ -61,6 +61,7 @@ export default {
       formulario: {
         categoria: "",
         titulo: "",
+        time_left: "",
         descripcion: "",
         estado: "",
         precio: "",

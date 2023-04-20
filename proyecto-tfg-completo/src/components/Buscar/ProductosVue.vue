@@ -2,7 +2,7 @@
   <div class="productosVue">
     <div class="productoVue">
       <div class="productoVfor" v-for="item in items" :key="item">
-        <router-link :to="{name: 'Subasta', params: { id: item.created_by, categoria: item.categoria, titulo: item.title },}">
+        <router-link :to="{name: 'Subasta', params: { id: item.id_producto, categoria: item.categoria, titulo: item.title },}">
           <img :src=item.img alt="" />
         </router-link>
           <div class="productoDescripcion">

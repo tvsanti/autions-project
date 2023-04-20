@@ -36,7 +36,7 @@
           {{ prouctContent.condition }}
         </p>
         <h4>
-          Tiempo restante: <b>{{ prouctContent.time_left }}</b>
+          Tiempo restante: {{ getTimeRemaining().days }}:{{ getTimeRemaining().hours }}:{{ getTimeRemaining().minutes }}:{{ getTimeRemaining().seconds }}
         </h4>
       </div>
       <div class="pujar">
@@ -111,7 +111,8 @@ export default {
       arraySeleccionada: 0,
       prouctContent: [],
       socket: null,
-      userPuja: ''
+      userPuja: '',
+      startDate: new Date()
     };
   },
   methods: {
@@ -127,6 +128,20 @@ export default {
       await axios
         .post(`http://localhost:3001/subasta/${this.$route.params.id}/${this.$route.params.categoria}/${this.$route.params.titulo}`, {price: importe});
     },
+    getTimeRemaining() {
+      const total = Date.parse(this.prouctContent.time_left) - Date.parse(this.startDate);
+      const days = Math.floor(total / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((total / 1000 / 60) % 60);
+      const seconds = Math.floor((total / 1000) % 60);
+      return { days, hours, minutes, seconds };
+    }
+  },
+  created() {
+    setInterval(() => {
+      this.startDate = new Date();
+      console.log(this.getTimeRemaining());
+    }, 1000);
   },
   async mounted() {
     this.socket = io("http://localhost:3001");
@@ -141,6 +156,7 @@ export default {
         `http://localhost:3001/subasta/${this.$route.params.id}/${this.$route.params.categoria}/${this.$route.params.titulo}`
       )
       .then((res) => {
+        console.log(`${this.$route.params.id}/${this.$route.params.categoria}/${this.$route.params.titulo}`);
         const { data } = res;
         this.prouctContent = data[0];
       });

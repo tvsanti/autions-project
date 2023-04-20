@@ -39,6 +39,7 @@ router.get('/api/:id', async (req, res) => {
 router.get('/subasta/:id/:categoria/:titulo', async(req, res) => {
     try {
         const [results] = await connection.query('SELECT * FROM producto WHERE id_producto = ? and categoria = ? and title = ?', [req.params.id,req.params.categoria,req.params.titulo])
+        console.log(results);
         res.json(results);
     } catch (error) {
         console.log('Error');
@@ -74,7 +75,7 @@ router.post('/api', async (req, res) => {
         title: req.body.titulo,
         description: req.body.descripcion,
         condition: req.body.estado,
-        time_left: new Date(),
+        time_left: req.body.time_left,
         price: req.body.precio,
         img: req.body.rutaImg,
         created_by: req.body.created_by,
