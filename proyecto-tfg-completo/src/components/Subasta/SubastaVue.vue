@@ -48,56 +48,6 @@
       </div>
     </div>
   </div>
-  <!-- <div class="masProductos">
-    <h1>Ver más productos</h1>
-    <div class="masProductos2">
-      <div>
-        <img
-          src="https://static.zarahome.net/8/photos4/2022/I/4/1/p/2383/046/400/2383046400_1_1_3.jpg?t=1669111568995"
-          alt=""
-        />
-        <h2>Titulo</h2>
-        <h3>305€</h3>
-        <p>Descripcion de producto jarron moderno fondo gris</p>
-      </div>
-      <div>
-        <img
-          src="https://static.zarahome.net/8/photos4/2022/I/4/1/p/8385/046/400/8385046400_1_1_3.jpg?t=1647616865404"
-          alt=""
-        />
-        <h2>Titulo</h2>
-        <h3>305€</h3>
-        <p>Descripcion de producto jarron moderno fondo gris</p>
-      </div>
-      <div>
-        <img
-          src="https://static.zarahome.net/8/photos4/2022/I/4/1/p/2383/046/400/2383046400_1_1_3.jpg?t=1669111568995"
-          alt=""
-        />
-        <h2>Titulo</h2>
-        <h3>305€</h3>
-        <p>Descripcion de producto jarron moderno fondo gris</p>
-      </div>
-      <div>
-        <img
-          src="https://static.zarahome.net/8/photos4/2022/I/4/1/p/9365/046/712/9365046712_1_1_3.jpg?t=1663171365923"
-          alt=""
-        />
-        <h2>Titulo</h2>
-        <h3>305€</h3>
-        <p>Descripcion de producto jarron moderno fondo gris</p>
-      </div>
-      <div>
-        <img
-          src="https://static.zarahome.net/8/photos4/2022/I/4/1/p/2383/046/400/2383046400_1_1_3.jpg?t=1669111568995"
-          alt=""
-        />
-        <h2>Titulo</h2>
-        <h3>305€</h3>
-        <p>Descripcion de producto jarron moderno fondo gris</p>
-      </div>
-    </div>
-  </div> -->
 </template>
 
 <script>
@@ -140,23 +90,19 @@ export default {
   created() {
     setInterval(() => {
       this.startDate = new Date();
-      console.log(this.getTimeRemaining());
     }, 1000);
   },
   async mounted() {
     this.socket = io("http://localhost:3001");
     this.socket.on("puja", (data) => {
-      console.log(data); // se reciben los datos de la puja realizada
       this.prouctContent.price = data.importe
       this.userPuja = data.user
-      // actualizar la puja actual en el frontend con los datos recibidos
     });
     await axios
       .get(
         `http://localhost:3001/subasta/${this.$route.params.id}/${this.$route.params.categoria}/${this.$route.params.titulo}`
       )
       .then((res) => {
-        console.log(`${this.$route.params.id}/${this.$route.params.categoria}/${this.$route.params.titulo}`);
         const { data } = res;
         this.prouctContent = data[0];
       });

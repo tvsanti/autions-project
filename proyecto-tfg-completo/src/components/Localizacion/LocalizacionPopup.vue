@@ -44,7 +44,6 @@ export default {
       const apiKey = `https://nominatim.openstreetmap.org/?addressdetails=1&q=${palabra}&format=json&countrycodes=es`;
       axios.get(apiKey).then((res) => {
         let { data } = res;
-        console.log(data);
         data = data.filter(i => i.display_name.split(',').length -1 >= 3)
         this.arrayBuscador = data;
 

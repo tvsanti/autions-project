@@ -29,12 +29,8 @@ const io = socketIo(server, {
 });
 
 io.on('connection', (socket) => {
-  console.log('Un cliente se ha conectado.');
-
   socket.on('puja', (data) => {
-    console.log(data); // se reciben los datos de la puja realizada
-    // procesar la puja y actualizar la puja actual en el backend
-    io.emit('puja', data); // enviar los datos de la puja a todos los clientes conectados
+    io.emit('puja', data); 
   });
 
   socket.on('disconnect', () => {
