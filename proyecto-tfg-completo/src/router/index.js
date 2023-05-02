@@ -5,7 +5,7 @@ import Home from "../views/HomeVue"
 import Publicar from "../views/PublicarVue"
 import Subasta from "../views/SubastaVue"
 import Buscar from "../views/BuscarVue"
-
+import Perfil from '../views/PerfilVue.vue'
 // creamos la instancia router
 const router = createRouter({
     history: createWebHistory(),
@@ -35,7 +35,11 @@ const router = createRouter({
             component: Subasta,
             name: 'Subasta'
         },
-
+        {
+            path: '/perfil',
+            component: Perfil,
+            name: 'PerfilVue'
+        },
     ]
   })
 

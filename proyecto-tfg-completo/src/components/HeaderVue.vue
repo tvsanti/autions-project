@@ -12,6 +12,9 @@
       <button v-else-if="$cookies.get('loginCookie')" @click="LogOut()">
         Log Out
       </button>
+      <router-link to="/perfil" v-if="$cookies.get('loginCookie')" >
+        Perfil
+      </router-link>
       
       <router-link v-if="$cookies.get('loginCookie')" to="/publicar">
         <button class="button-color">

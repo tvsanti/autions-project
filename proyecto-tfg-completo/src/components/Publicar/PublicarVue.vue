@@ -72,24 +72,22 @@ export default {
   },
   methods: {
     async createPost() {
+      const productos = new FormData()
+      this.files.forEach(file => {
+        productos.append('files', file)
+      })
+
+      await axios.post('http://localhost:3001/api/localimages/productos', productos);
+      
       let cookie = this.$cookies.get('loginCookie')
-      this.formulario.rutaImg = `images/${cookie.id_cliente}`
       this.formulario.created_by = cookie.id_cliente
       let objeto = JSON.parse(JSON.stringify(this.formulario));
       await axios.post("http://localhost:3001/api", objeto)
 
 
-      const formImages = new FormData()
-      this.files.forEach(file => {
-        formImages.append('files', file)
-      })
-
-      await axios.post('http://localhost:3001/api/localImages', formImages);
     },
     onFileChange(event) {
-      let cookie = this.$cookies.get('loginCookie')
       const files = this.$refs.files.files
-      this.formulario.rutaImgPortada = `images/${cookie.id_cliente}/${files[0].name}`
       this.files = [...this.files, ...files]
       let imagenes = event.target.files
       this.numeroFotos = imagenes.length

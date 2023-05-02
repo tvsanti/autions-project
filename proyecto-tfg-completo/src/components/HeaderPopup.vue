@@ -71,7 +71,6 @@ export default {
     async registerPost() {
       await axios
         .post("http://localhost:3001/register", this.formularioRegister)
-        .then((res) => console.log(res));
     },
     async loginPost() {
       await axios
