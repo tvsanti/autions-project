@@ -12,8 +12,21 @@
 @mixin buttonStyle()
   background: none
   border: none
-  border-radius: 1rem
+  border-radius: .5rem
   cursor: pointer
+@keyframes popupFadeIn
+  from
+    opacity: 0
+
+  to
+    opacity: 1
+
+@keyframes popupFadeOut
+  from
+    opacity: 1
+
+  to
+    opacity: 0
 
 @keyframes rotation
   from
@@ -29,6 +42,7 @@
   box-sizing: border-box
 
 header
+  display: none
   @include displayFlex(row,space-between,center)
   position: fixed
   padding: 0 3rem
@@ -38,18 +52,29 @@ header
     width: 150px
     padding: .5rem 0
   .header-buttons
-    button,a
-      text-decoration: none
-      @include buttonStyle()
-      padding: 10px 1.5rem
-      background: #bb1e26
-      border-radius: 2rem
-      color: white
+    display: flex
+    justify-content: center
+    align-items: center
+    gap: 2rem
 
-      margin-left: 2rem
+    .heartButton
+      background: none
       i
-        padding-right: .5rem
-
+        color: #bb1e26
+        font-size: 2rem
+    .heart-none
+      font-size: 2rem
+    a,button
+      display: flex
+      justify-content: center
+      align-items: center
+      padding: 0 2rem
+      text-decoration: none
+      background: #bb1e26
+      border-radius: .8rem
+      color: white
+      height: 2.9rem
+      font-size: 16px
 .popup
   position: fixed
   top: 0
@@ -58,10 +83,44 @@ header
   bottom: 0
   z-index: 99
   background-color: rgba(0, 0, 0, 0.2)
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5)
+  animation: popupFadeIn 0.3s ease-out forwards
 
   display: flex
   align-items: center
   justify-content: center
+  animation: popupFadeIn 0.3s ease-out forwards
+
+.popupOtions
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  gap: 1rem
+  position: fixed
+  background-color: #fff
+  border: 1px solid #ccc
+  padding: 30px
+  border-radius: .5rem
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5)
+
+  .optionPopup
+    button
+      margin: 0 30px
+      padding: .5rem 3rem
+      color: #fff
+      border: none
+      border-radius: 3px
+      cursor: pointer
+      transition: .3s
+      &:first-of-type
+        background-color: red
+        &:hover
+          background-color: #e75d5d
+      &:last-child
+        background-color: green
+        &:hover
+          background-color: #05b635
 
 .popup2
   background: #fff
@@ -122,9 +181,10 @@ main
   width: 100%
   @include displayFlex(column,center,center)
   .buscadorVue
-    width: 70%
+    width: 80%
     margin: 2rem 0
     @include displayFlex(column,space-center,center)
+
     h1
       font-size: 3rem
       font-weight: 600
@@ -173,17 +233,24 @@ main
       justify-content: center
       flex-direction: column
       div
-        display: flex
+        display: grid
+        gap: 1rem
+        grid-template-columns: 1fr 1fr 1fr 1fr
         align-items: center
         justify-content: center
-        flex-wrap: wrap
+        @media only screen and (max-width: 1250px)
+          grid-template-columns: 1fr 1fr 1fr
+        @media only screen and (max-width: 900px)
+          grid-template-columns: 1fr 1fr
+        @media only screen and (max-width: 480px)
+          grid-template-columns: 1fr
+
         div
           cursor: pointer
           @include displayFlex(column,center,center)
           border: none
           box-shadow: 0 5px 10px 0 gray
           border-radius: 5px
-          width: 18%
           margin: 2rem
           height: 18vh
           transition: .3s
@@ -216,20 +283,32 @@ main
         background: #bb1e26
 
   .queEsBalu
-    width: 70%
-    margin: 2rem
-    @include displayFlex(column,center,center)
+    width: 60%
+    margin: 2rem 0
+    display: flex
+    justify-content: center
+    align-items: center
+    flex-direction: column
+    // @include displayFlex(column,center,center)
     h1
       margin: 2rem 0
       font-size: 2.5rem
       font-weight: 600
     div
-      display: flex
-      flex-direction: row
+      display: grid
+      gap: 1rem
+      grid-template-columns: 1fr 1fr 1fr
+      align-items: center
+      justify-content: center
+      @media only screen and (max-width: 1250px)
+        grid-template-columns: 1fr
+
       div
         display: flex
         flex-direction: column
         margin: 1rem 2rem
+        p
+          text-align: justify
         h2
           font-weight: 600
 
@@ -255,7 +334,17 @@ main
         flex-direction: column
         .mostarLi3
           display: flex !important
+          flex-direction: column
           margin: 0 1rem
+          gap: 1rem
+          #precioFiltro
+            width: 100%
+          #inputPrecio
+            width: 50%
+            height: 2rem
+            padding-left: 8px
+            border-radius: 5px
+            border: none
 
         .mostarLi4
           display: flex !important
@@ -424,6 +513,8 @@ main
         b
           font-weight: 600
       div
+        display: flex
+        gap: 1rem
         button
           @include buttonStyle()
           padding: 5px 2rem
@@ -505,7 +596,7 @@ main
   hr
     margin-top: 4rem
     width: 80%
-      
+
   .perfilVue
     width: 80%
     margin-top: 1rem
@@ -516,6 +607,18 @@ main
       display: flex
       flex-direction: column
       margin: 2rem 2rem
+      .perfilDescripcion
+        display: flex
+        justify-content: space-between
+        align-items: center
+        .iconsPerfil
+          display: flex
+          gap: 1rem
+          .fa-trash
+            color: #282828
+          i
+            font-size: 2rem
+            color: #bb1e26
       a
         text-decoration: none
         color: black
@@ -524,13 +627,83 @@ main
           border-radius: 1rem
           width: 100%
           height: 200px
-          
+
 footer
   @include displayFlex(row,center,center)
   padding: 1rem 0
 
-
-
+.mainFavorito
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  padding-top: 10rem
+  width: 100%
+  h1
+    font-size: 3rem
+  .favoritosVue
+    width: 100%
+    display: grid
+    grid-template-columns: repeat(4, 2fr)
+    grid-gap: 10px
+    .perfilCard
+      display: flex
+      flex-direction: column
+      margin: 2rem 2rem
+      .perfilDescripcion
+        display: flex
+        justify-content: space-between
+        align-items: center
+        i
+          font-size: 2rem
+          color: #bb1e26
+      a
+        text-decoration: none
+        color: black
+        img
+          cursor: pointer
+          border-radius: 1rem
+          width: 100%
+          height: 300px
+.saldo
+  display: flex
+  justify-content: center
+  flex-direction: column
+  gap: 1rem
+  h3
+    font-weight: 500
+  label
+    margin-right: 1rem
+  button
+    background-color: #bb1e26
+    color: white
+    border: none
+    margin-top: 1rem
+    padding: .5rem 2rem
+    border-radius: .4rem
+.success,.cancel
+  height: 100vh
+  width: 100%
+  display: flex
+  justify-content: center
+  align-items: center
+  flex-direction: column
+  text-align: center
+  a
+    text-decoration: none
+    background-color: #bb1e26
+    color: white
+    margin-top: 2rem
+    border: none
+    box-shadow: 0 0 20px 10px salmon
+    font-size: 1.3rem
+    border-radius: .4rem
+    padding: 1rem 3rem
+  h1
+    font-size: 3rem
 
 .fa-star, .fa-star-half
   color: gold
+
+.fa-heart
+  color: #bb1e26

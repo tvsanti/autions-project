@@ -5,13 +5,9 @@
   <div class="pefilMain">
     <div class="userInfo">
       <div class="infoPerfil">
-        <img
-          class="roundedProfile"
-          :src="fotoPerfil"
-          alt=""
-        />
+        <img class="roundedProfile" :src="fotoPerfil" alt="" />
         <div class="textPerfil">
-          <pre>{{nombre}}</pre>
+          <pre>{{ nombre }}</pre>
           <span
             ><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
             <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
@@ -42,7 +38,28 @@
             <span>{{ item.title }}</span>
             <h4 id="perfilPrecio">{{ item.price }}</h4>
           </div>
-          <i @click="getApiData()" class="fa-regular fa-heart"></i>
+          <div class="iconsPerfil">
+            <i @click="deleteSubasta(item.id_producto)" class="fa-solid fa-trash"></i>
+            <div v-if="showPopup" class="popup">
+              <div class="popupOtions">
+                <p>¿Estás seguro de que deseas eliminar esta subasta?</p>
+                <div class="optionPopup">
+                  <button @click="delSubasta(item.id_producto)">Sí</button>
+                  <button @click="showPopup = false">No</button>
+                </div>
+              </div>
+            </div>
+            <i
+              v-if="item.favoritos"
+              @click="delFavourites(item.id_producto, item.created_by)"
+              class="fa-solid fa-heart"
+            ></i>
+            <i
+              v-else
+              @click="addFavourites(item.id_producto, item.created_by)"
+              class="fa-regular fa-heart"
+            ></i>
+          </div>
         </div>
       </div>
     </div>
@@ -57,34 +74,59 @@ export default {
   name: "PerfilVue",
   components: {
     HeaderVue,
-    PerfilPopup
+    PerfilPopup,
   },
   data() {
     return {
       isActive: true,
       items: [],
-      fotoPerfil: '',
-      nombre: '',
-      buttonTrigger: false
+      fotoPerfil: "",
+      nombre: "",
+      buttonTrigger: false,
+      showPopup: false,
     };
   },
   methods: {
     TogglePopup() {
-      this.buttonTrigger = !this.buttonTrigger
+      this.buttonTrigger = !this.buttonTrigger;
+    },
+    async addFavourites(id_producto, created_by) {
+      const object = {
+        id_producto,
+        created_by,
+      };
+      object["cookie"] = this.$cookies.get("loginCookie").id_cliente;
+      await axios.post(`http://localhost:3001/favourites`, object);
+      await axios.post(`http://localhost:3001/favouritesProducto`, object);
+    },
+    async delSubasta(id_producto) {
+      await axios.post(`http://localhost:3001/delSubasta`, { id_producto });
+      this.showPopup = false;
+    },
+    deleteSubasta() {
+      this.showPopup = true;
+    },
+    async delFavourites(id_producto, created_by) {
+      const object = {
+        id_producto,
+        created_by,
+      };
+      object["cookie"] = this.$cookies.get("loginCookie").id_cliente;
+      await axios.post(`http://localhost:3001/favouritesDel`, object);
+      await axios.post(`http://localhost:3001/favouritesProductoDel`, object);
     },
   },
   async mounted() {
     const cookie = this.$cookies.get("loginCookie");
     await axios
-      .get(`http://localhost:3001/perfil/${cookie.id_cliente}`)
+      .get(`http://localhost:3001/perfilLocal/${cookie.id_cliente}`)
       .then((res) => {
-        const { data } = res;
-        this.items = data;
-        this.fotoPerfil = data[0].imgPerfil
-        this.nombre= data[0].nombre
+        const  [data]  = res.data;
+        this.items = data[1];
+        this.fotoPerfil = data[0][0].imgPerfil;
+        this.nombre = data[0][0].nombre;
       });
-      console.log(this.items);
-    },
+  },
 };
 </script>
 

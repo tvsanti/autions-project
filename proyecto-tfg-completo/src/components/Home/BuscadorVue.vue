@@ -4,7 +4,7 @@
     <div class="menu-buscador">
       <input type="text" v-model="consultaBuscar" placeholder="Buscar producto" />
       <router-link :to="{name: 'BuscarId', params: { id: consultaBuscar, },}">
-        <button class="button-buscar"><i class="fa-solid fa-magnifying-glass"></i>Buscar</button>
+        <button @click="limpiarPalabra" class="button-buscar"><i class="fa-solid fa-magnifying-glass"></i>Buscar</button>
       </router-link>
     </div>
   </div>
@@ -19,7 +19,10 @@ export default {
     }
   },
   methods: {
-
+    limpiarPalabra() {
+      this.consultaBuscar = this.consultaBuscar.slice(1)
+      console.log(this.consultaBuscar);
+    }
   }
 };
 </script>

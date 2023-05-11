@@ -70,13 +70,13 @@ export default {
     },
     async registerPost() {
       await axios
-        .post("http://localhost:3001/register", this.formularioRegister)
+      .post("http://localhost:3001/register", this.formularioRegister)
     },
     async loginPost() {
       await axios
         .post("http://localhost:3001/login", this.formularioLogin)
         .then((res) => this.cookie = res.data);
-      
+      this.$cookies.remove('loginCookie')
       if (this.cookie) {
         this.$cookies.set('loginCookie', this.cookie)
         this.TogglePopup()

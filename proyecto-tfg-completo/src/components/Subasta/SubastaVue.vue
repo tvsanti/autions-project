@@ -14,16 +14,26 @@
     <div class="menuSubasta">
       <div class="valoracionUser">
         <div class="perfilUser">
-          <img
-            src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
-            alt=""
-          />
+          <img :src="datosUsuario.imgPerfil" alt="" />
           <div class="infoUser">
-            <h3>Santiago Thevenet</h3>
+            <h3>{{ datosUsuario.nombre }}</h3>
             <h4>4 productos</h4>
           </div>
         </div>
-        <i class="fa-regular fa-heart"></i>
+        <i
+          v-if="prouctContent.favoritos && $cookies.get('loginCookie')"
+          @click="
+            delFavourites(prouctContent.id_producto, prouctContent.created_by)
+          "
+          class="fa-solid fa-heart"
+        ></i>
+        <i
+          v-else
+          @click="
+            addFavourites(prouctContent.id_producto, prouctContent.created_by)
+          "
+          class="fa-regular fa-heart"
+        ></i>
       </div>
       <div class="descripcion">
         <h1>{{ prouctContent.title }}</h1>
@@ -33,18 +43,24 @@
         </p>
         <p>
           <b>Informe de estado</b> <br />
-          {{ prouctContent.condition }}
+          {{ prouctContent.condicion }}
         </p>
         <h4>
-          Tiempo restante: {{ getTimeRemaining().days }}:{{ getTimeRemaining().hours }}:{{ getTimeRemaining().minutes }}:{{ getTimeRemaining().seconds }}
+          Tiempo restante: {{ getTimeRemaining().days }}:{{
+            getTimeRemaining().hours
+          }}:{{ getTimeRemaining().minutes }}:{{ getTimeRemaining().seconds }}
         </h4>
       </div>
       <div class="pujar">
-        <h2>Puja actual: {{ userPuja }} <b>{{ prouctContent.price }}€</b></h2>
+        <h2>
+          Puja actual: {{ userPuja }} <b>{{ prouctContent.price }}€</b>
+        </h2>
         <div>
           <input type="text" placeholder="Importe de puja" />
           <button @click="pujar">Pujar</button>
         </div>
+        <span v-if="mensajeError">No tienes suficiente dinero</span>
+        <span v-else-if="mensajeErrorMenor">La puja debe ser mayor al precio del producto</span>
       </div>
     </div>
   </div>
@@ -61,31 +77,75 @@ export default {
       arraySeleccionada: 0,
       prouctContent: [],
       socket: null,
-      userPuja: '',
-      startDate: new Date()
+      userPuja: "",
+      startDate: new Date(),
+      datosUsuario: [],
+      mensajeError: false,
+      mensajeErrorMenor: false
     };
   },
   methods: {
     async pujar() {
       const importe = document.querySelector('input[type="text"]').value;
+      const cookie = this.$cookies.get("loginCookie");
+
       const data = {
         importe: importe,
-        user: this.$cookies.get('loginCookie').nombre,
-        id_cliente: this.$cookies.get('loginCookie').id_cliente
+        user: cookie.nombre,
+        id_cliente: cookie.id_cliente,
       };
-      this.socket.emit("puja", data);
-      
+
       await axios
-        .post(`http://localhost:3001/subasta/${this.$route.params.id}/${this.$route.params.categoria}/${this.$route.params.titulo}`, {price: importe});
+        .get(`http://localhost:3001/miDinero/${cookie.id_cliente}`)
+        .then(async (res) => {
+          console.log(res.data.saldo.saldo < parseInt(importe));
+          console.log(importe);
+          console.log(this.prouctContent.price);
+          if (res.data.saldo.saldo < parseInt(importe)) {
+            this.mensajeError = true
+          }else if (importe < this.prouctContent.price ){
+            this.mensajeErrorMenor = true
+          }else {
+            this.socket.emit("puja", data);
+            await axios
+            .post(
+              `http://localhost:3001/subasta/${this.$route.params.id}/${this.$route.params.categoria}/${this.$route.params.titulo}`,
+              { price: importe, ultimoPujador: cookie.id_cliente }
+              )
+              .then((res) => {
+                console.log(res.data);
+              });
+          }
+        });
     },
     getTimeRemaining() {
-      const total = Date.parse(this.prouctContent.time_left) - Date.parse(this.startDate);
+      const total =
+        Date.parse(this.prouctContent.time_left) - Date.parse(this.startDate);
       const days = Math.floor(total / (1000 * 60 * 60 * 24));
       const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
       const minutes = Math.floor((total / 1000 / 60) % 60);
       const seconds = Math.floor((total / 1000) % 60);
       return { days, hours, minutes, seconds };
-    }
+    },
+    async addFavourites(id_producto, created_by) {
+      const object = {
+        id_producto,
+        created_by,
+      };
+      object["cookie"] = this.$cookies.get("loginCookie").id_cliente;
+      await axios.post(`http://localhost:3001/favourites`, object);
+      await axios.post(`http://localhost:3001/favouritesProducto`, object);
+    },
+    async delFavourites(id_producto, created_by) {
+      const object = {
+        id_producto,
+        created_by,
+      };
+      object["cookie"] = this.$cookies.get("loginCookie").id_cliente;
+      console.log(object);
+      await axios.post(`http://localhost:3001/favouritesDel`, object);
+      await axios.post(`http://localhost:3001/favouritesProductoDel`, object);
+    },
   },
   created() {
     setInterval(() => {
@@ -95,8 +155,8 @@ export default {
   async mounted() {
     this.socket = io("http://localhost:3001");
     this.socket.on("puja", (data) => {
-      this.prouctContent.price = data.importe
-      this.userPuja = data.user
+      this.prouctContent.price = data.importe;
+      this.userPuja = data.user;
     });
     await axios
       .get(
@@ -104,13 +164,24 @@ export default {
       )
       .then((res) => {
         const { data } = res;
+
         this.prouctContent = data[0];
       });
+    
+    console.log(this.$route.params.id);
     await axios
       .get(`http://localhost:3001/subasta/${this.$route.params.id}`)
       .then((res) => {
+        console.log(this.$route.params.id);
         const { data } = res;
         this.arrayImg = data;
+      });
+
+    await axios
+      .get(`http://localhost:3001/perfil/${this.$route.params.id}`)
+      .then((res) => {
+        const { data } = res;
+        this.datosUsuario = data[0];
       });
   },
 };

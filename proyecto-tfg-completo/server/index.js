@@ -5,17 +5,21 @@ const cors = require("cors");
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const http = require('http');
+const cron = require('node-cron')
 const socketIo = require('socket.io');
-
+const axios = require('axios')
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:8080'
+}));
 app.use('/', Router);
 
 const server = http.createServer(app);
+
 
 const io = socketIo(server, {
   cors: {
@@ -37,6 +41,15 @@ io.on('connection', (socket) => {
     console.log('El cliente se ha desconectado.');
   });
 });
+
+// try {
+//   cron.schedule('*/5 * * * * *', async function() {
+//     await axios.get('http://localhost:3001/delExpiredProductos')
+//   });
+// } catch (error) {
+//   console.log(error);
+// }
+
 
 server.listen(3001, () => {
   console.log('Servidor http://localhost:3001/api');

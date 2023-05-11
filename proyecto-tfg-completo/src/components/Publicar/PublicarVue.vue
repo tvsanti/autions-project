@@ -83,6 +83,7 @@ export default {
       this.formulario.created_by = cookie.id_cliente
       let objeto = JSON.parse(JSON.stringify(this.formulario));
       await axios.post("http://localhost:3001/api", objeto)
+      window.location.href = 'http://localhost:8080/'
 
 
     },

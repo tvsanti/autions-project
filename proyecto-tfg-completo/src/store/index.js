@@ -4,6 +4,7 @@ export default createStore({
         count: 0,
         isActive: true,
         titulo: "Más categorias",
+        siguienteSaldo: 0,
         items: [
             {
                 titulo: "Todas las categorias",
@@ -141,6 +142,9 @@ export default createStore({
         },
         SOCKET_COUNTER_DECREMENT(state, counter) {
             state.count = counter
+        },
+        sumarSaldo(state, saldo) {
+            state.siguienteSaldo += parseFloat(saldo)
         }
     },
     actions: {

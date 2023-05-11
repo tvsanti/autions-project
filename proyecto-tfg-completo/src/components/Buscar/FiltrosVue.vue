@@ -1,8 +1,4 @@
 <template>
-  <localizacion-popup
-    v-if="buttonTrigger"
-    :ToggleLocalizacion="() => ToggleLocalizacion()"
-  />
   <div class="filtrosVue">
     <ul class="ul1">
       <div class="filtroLi">
@@ -15,39 +11,20 @@
           ></i>
         </div>
         <div :class="{ mostarLi2: animacionActiva1 }" class="mostrarLi">
-          <select name="" id="">
+          <select @change="notifyCategory" v-model="category" id="category">
             <option
               v-for="item in $store.state.itemsCompleta"
               :key="item"
-              value=""
+              :value="item.titulo"
             >
               {{ item.titulo }}
             </option>
           </select>
         </div>
       </div>
-
       <div class="filtroLi">
         <div class="filtro2">
-          <button>
-            <i class="fa-sharp fa-solid fa-location-dot"></i>Localización
-          </button>
-          <i
-            :class="{ flechaIconoAnimacion2: animacionActiva2 }"
-            @click="rotarIconos2()"
-            class="fa-solid fa-caret-left flechaIcono"
-          ></i>
-        </div>
-
-        <div :class="{ mostarLi2: animacionActiva2 }" class="mostrarLi">
-          <button @click="ToggleLocalizacion()" id="button-locationFiltros">
-            <i class="fa-solid fa-location-dot"></i>Localización
-          </button>
-        </div>
-      </div>
-      <div class="filtroLi">
-        <div class="filtro2">
-          <button><i class="fa-solid fa-money-bill"></i>Precio</button>
+          <button><i class="fa-solid fa-money-bill"></i>Precio Máximo</button>
           <i
             :class="{ flechaIconoAnimacion3: animacionActiva3 }"
             @click="rotarIconos3()"
@@ -55,7 +32,17 @@
           ></i>
         </div>
         <div :class="{ mostarLi3: animacionActiva3 }" class="mostrarLi">
-          <input value="1000" min="1000" max="50000" step="500" type="range" />
+          <input
+            @change="notifyPrecio"
+            v-model="precioFiltro"
+            id="precioFiltro"
+            min="0"
+            :max="numeroMax+1"
+            step="1"
+            type="range"
+          />
+          <input id="inputPrecio" @change="notifyPrecio" type="number" v-model="precioFiltro" placeholder="Precio Máximo">
+
         </div>
       </div>
       <div class="filtroLi">
@@ -70,29 +57,63 @@
           ></i>
         </div>
         <div :class="{ mostarLi4: animacionActiva4 }" class="mostrarLi">
-          <select name="" id="">
-            <option value="">Nuevo con etiqueta</option>
-            <option value="">Nuevo sin etiqueta</option>
-            <option value="">Muy bueno</option>
-            <option value="">Bueno</option>
-            <option value="">Satisfactorio</option>
+          <select @change="notify" v-model="message" id="message">
+            <option value="Nuevo con etiqueta">Nuevo con etiqueta</option>
+            <option value="Nuevo sin etiqueta">Nuevo sin etiqueta</option>
+            <option value="Muy bueno">Muy bueno</option>
+            <option value="Bueno">Bueno</option>
+            <option value="Satisfactorio">Satisfactorio</option>
           </select>
         </div>
       </div>
-    </ul>
-    <ul class="ul2">
-      <button>Ordenar Por</button>
+      <div class="filtroLi">
+        <div class="filtro2">
+          <button><i class="fa-solid fa-sort"></i>Ordenar Por</button>
+          <i
+          :class="{ flechaIconoAnimacion4: animacionActiva4 }"
+          @click="rotarIconos2()"
+          class="fa-solid fa-caret-left flechaIcono"
+          ></i>
+        </div>
+        <div :class="{ mostarLi2: animacionActiva2 }" class="mostrarLi">
+          <div class="mostarLi">
+            <select @change="notifyOrdenar" v-model="ordenar" id="ordenar">
+            <option value="mayor">Precio: de mayor a menor</option>
+            <option value="menor">Precio: de menor a mayor</option>
+          </select>
+          </div>
+        </div>
+      </div>
     </ul>
   </div>
 </template>
 
 <script>
-import LocalizacionPopup from "../Localizacion/LocalizacionPopup.vue";
+import { ref } from "vue";
+import axios from "axios";
 
 export default {
   name: "App",
-  components: {
-    LocalizacionPopup,
+  emits: ["onFire", "onFirePrecio, onFireCategory, onFireOrdenar"],
+  setup(props, { emit }) {
+    const message = ref("");
+    const precioFiltro = ref("");
+    const category = ref("");
+    const ordenar = ref("");
+
+    const notify = () => {
+      emit("onFire", message.value);
+    };
+    const notifyOrdenar = () => {
+      emit("onFireOrdenar", ordenar.value);
+    };
+    const notifyCategory = () => {
+      emit("onFireCategory", category.value);
+    };
+    const notifyPrecio = () => {
+      emit("onFirePrecio", precioFiltro.value);
+    };
+    return { message, notify, notifyPrecio, notifyCategory, notifyOrdenar,precioFiltro, ordenar,category };
   },
   data() {
     return {
@@ -101,12 +122,10 @@ export default {
       animacionActiva3: false,
       animacionActiva4: false,
       buttonTrigger: false,
+      numeroMax: 1000000
     };
   },
   methods: {
-    ToggleLocalizacion() {
-      this.buttonTrigger = !this.buttonTrigger;
-    },
     rotarIconos1() {
       this.animacionActiva1 = !this.animacionActiva1;
     },
@@ -120,6 +139,14 @@ export default {
       this.animacionActiva4 = !this.animacionActiva4;
     },
   },
+  async mounted() {
+    await axios
+      .get(`http://localhost:3001/api/${this.$route.params.id}`)
+      .then((res) => {
+        const { data } = res;
+        this.numeroMax = data[data.length-1][0].numero_maximo
+      });
+  }
 };
 </script>
 
