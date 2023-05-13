@@ -16,8 +16,6 @@ app.locals.cont = 0
 let max
 const storage = multer.diskStorage({
     destination: async (req, file, cb) => {
-        console.log('max =====>', max);
-        console.log('cont =====>', app.locals.cont);
         if (app.locals.cont == 0) {
             max = dir.length == 0 ? 1 : Math.max(...dir) + 1
             dir.push(max)
@@ -183,7 +181,7 @@ router.get('/perfilLocal/:id', async (req, res) => {
 
 router.post('/subasta/:id/:categoria/:titulo', async (req, res) => {
     try {
-        const [results] = await connection.query('UPDATE producto SET price = ?, ultimoPujador = ? WHERE id_producto = ? ', [req.body.price,req.body.ulimoPujador ,req.params.id]);
+        const [results] = await connection.query('UPDATE producto SET price = ?, ultimoPujador = ? WHERE id_producto = ? ', [req.body.price,req.body.ultimoPujador ,req.params.id]);
         res.send(results);
     } catch (error) {
         console.error(error);
@@ -211,7 +209,6 @@ router.post('/pujar/:id', async (req, res) => {
             success_url: `http://localhost:8080/success`,
             cancel_url: `http://localhost:8080/cancel`,
         });
-        console.log('precio =====', req.body.price);
         await connection.query('UPDATE cliente SET nextSaldo = ? WHERE id_cliente = ?', [req.body.price, req.params.id]);
 
         res.json({url: session.url, saldo: req.body.price})
@@ -235,9 +232,13 @@ router.get('/miDinero/:id', async (req, res) => {
 
 router.post('/miDinero/:id', async (req, res) => {
     try {
-        const [resultsD] = await connection.query('SELECT nextSaldo FROM cliente WHERE id_cliente = ?', [req.params.id]);
-        console.log(resultsD);
-        const [results] = await connection.query('UPDATE cliente SET saldo = saldo + ? WHERE id_cliente = ?', [resultsD[0].nextSaldo, req.params.id]);
+        const [resultsD] = await connection.query('SELECT nextSaldo,saldo FROM cliente WHERE id_cliente = ?', [req.params.id]);
+        let results
+        if (resultsD[0].saldo == null) {
+            [results] = await connection.query('UPDATE cliente SET saldo = ? WHERE id_cliente = ?', [resultsD[0].nextSaldo, req.params.id]);
+        } else {
+            [results] = await connection.query('UPDATE cliente SET saldo = saldo + ? WHERE id_cliente = ?', [resultsD[0].nextSaldo, req.params.id]);
+        }
         await connection.query('UPDATE cliente SET nextSaldo = ? WHERE id_cliente = ?', [0, req.params.id]);
         res.json(results[0])
         
@@ -444,15 +445,12 @@ router.get('/favourites/:id', async (req, res) => {
         let [response] = await connection.query('SELECT favoritos FROM cliente WHERE id_cliente = ?', [req.params.id])
         response = response[0]?.favoritos.split(",")
         let arrayFavourites = []
-        console.log(response);
         for (let i = 0; i < response.length; i++) {
             const element = response[i];
-            console.log(element);
             const favourite = await connection.query('SELECT * FROM producto WHERE id_producto = ?', [element])
 
             arrayFavourites.push(favourite[0][0])
         }
-        console.log(arrayFavourites);
         res.send(arrayFavourites)
 
     } catch (error) {
@@ -464,7 +462,13 @@ router.get('/delExpiredProductos', async (req, res) => {
     try {
         const [response] = await connection.query('SELECT * FROM producto WHERE time_left < NOW()')
         response.forEach(async (subasta) => {
-            await connection.query(`UPDATE cliente SET saldo = saldo - ?  WHERE id_cliente = ?`,[subasta.price, subasta.ulimoPujador])
+            const [responseCreaded] = await connection.query('SELECT * FROM cliente WHERE id_cliente = ?', [subasta.created_by])
+            await connection.query(`UPDATE cliente SET saldo = saldo - ?  WHERE id_cliente = ?`,[subasta.price, subasta.ultimoPujador])
+            if (responseCreaded[0].saldo == null) {
+                await connection.query(`UPDATE cliente SET saldo = saldo WHERE id_cliente = ?`,[subasta.price, subasta.created_by])
+            }else {
+                await connection.query(`UPDATE cliente SET saldo = saldo + ?  WHERE id_cliente = ?`,[subasta.price, subasta.created_by])
+            }
             await connection.query(`DELETE FROM producto WHERE id_producto = ${subasta.id_producto}`)
         });
         

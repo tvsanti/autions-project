@@ -117,12 +117,21 @@ header
     form
       margin-top: 18vh
       margin-bottom: 4vh
-      width: 30%
       border: .5px solid gray
       padding: 1.5rem 3rem
       border-radius: 1rem
       display: flex
       flex-direction: column
+      width: 35%
+      @media only screen and (max-width: 1500px)
+        width: 40%
+      @media only screen and (max-width: 1250px)
+        width: 45%
+      @media only screen and (max-width: 900px)
+        width: 65%
+      @media only screen and (max-width: 480px)
+        width: 80%
+         
       h1
         text-align: center
         font-weight: 600

@@ -1,6 +1,5 @@
 <template>
   <HeaderVue />
-  <hr />
   <main>
     <BuscadorVue />
     <CategoriasVue />

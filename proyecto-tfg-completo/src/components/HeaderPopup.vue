@@ -32,9 +32,13 @@
         <input required v-model="formularioRegister.mail" type="text" />
         <label>Contraseña</label>
         <input required v-model="formularioRegister.password" type="password" />
+        <span v-if="passwordNoValida"
+          >La contraseña debe tener al menos un dígito, una letra minúscula, una letra
+          mayúscula y una longitud mínima de 8 caracteres</span
+        >
         <div>
-          <input required type="checkbox" name="" id="" />Acepto las condiciones de uso y
-          la información básica sobre protección de datos.
+          <input required type="checkbox" name="" id="" />Acepto las condiciones
+          de uso y la información básica sobre protección de datos.
         </div>
         <input id="submitIS" type="submit" value="Registrarse" />
       </form>
@@ -43,22 +47,23 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 export default {
   props: ["TogglePopup"],
   data() {
     return {
       registerToggle: "loggin",
+      passwordNoValida: false,
       formularioLogin: {
-        mail: '',
-        password: ''
+        mail: "",
+        password: "",
       },
       formularioRegister: {
-        nombre: '',
-        mail: '',
-        password: '',
+        nombre: "",
+        mail: "",
+        password: "",
       },
-      cookie: ''
+      cookie: "",
     };
   },
   methods: {
@@ -68,21 +73,30 @@ export default {
     setRegister() {
       this.registerToggle = "register";
     },
+    validatePassowrd(password) {
+      return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(password);
+    },
     async registerPost() {
-      await axios
-      .post("http://localhost:3001/register", this.formularioRegister)
+      if (this.validatePassowrd(this.formularioRegister.password)) {
+        await axios.post(
+          "http://localhost:3001/register",
+          this.formularioRegister
+          );
+        } else {
+        this.passwordNoValida = true;
+      }
     },
     async loginPost() {
       await axios
         .post("http://localhost:3001/login", this.formularioLogin)
-        .then((res) => this.cookie = res.data);
-      this.$cookies.remove('loginCookie')
+        .then((res) => (this.cookie = res.data));
+      this.$cookies.remove("loginCookie");
       if (this.cookie) {
-        this.$cookies.set('loginCookie', this.cookie)
-        this.TogglePopup()
-        this.$forceUpdate()
+        this.$cookies.set("loginCookie", this.cookie);
+        this.TogglePopup();
+        this.$forceUpdate();
       }
-    }
+    },
   },
 };
 </script>

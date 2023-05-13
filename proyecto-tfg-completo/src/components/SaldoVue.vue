@@ -12,7 +12,7 @@
           <input v-model="cantidad" /><br />
           <button @click="depositar">Depositar</button>
         </div>
-        <h3>Tu saldo actual es: {{ miDinero }}€</h3>
+        <h3>Tu saldo actual es: {{ miDinero || 0 }}€</h3>
       </div>
     </div>
   </div>

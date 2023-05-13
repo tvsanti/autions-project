@@ -1,89 +1,94 @@
 <template>
   <div class="filtrosVue">
-    <ul class="ul1">
-      <div class="filtroLi">
-        <div class="filtro2">
-          <button><i class="fa-solid fa-list-check"></i>Categorias</button>
-          <i
-            :class="{ flechaIconoAnimacion1: animacionActiva1 }"
-            @click="rotarIconos1()"
-            class="fa-solid fa-caret-left flechaIcono"
-          ></i>
+    <i v-if="toggleFiltro" @click="toggleFiltro = !toggleFiltro" class="fa-solid fa-arrow-right esconder"></i>
+    <i v-if="!toggleFiltro" @click="toggleFiltro = !toggleFiltro" class="fa-solid fa-arrow-left esconder"></i>
+    <ul v-if="!toggleFiltro" class="ul1">
+      <div>
+        <div class="filtroLi">
+          <div class="filtro2">
+            <button><i class="fa-solid fa-list-check"></i>Categorias</button>
+            <i
+              :class="{ flechaIconoAnimacion1: animacionActiva1 }"
+              @click="rotarIconos1()"
+              class="fa-solid fa-caret-left flechaIcono"
+            ></i>
+          </div>
+          <div :class="{ mostarLi2: animacionActiva1 }" class="mostrarLi">
+            <select @change="notifyCategory" v-model="category" id="category">
+              <option
+                v-for="item in $store.state.itemsCompleta"
+                :key="item"
+                :value="item.titulo"
+              >
+                {{ item.titulo }}
+              </option>
+            </select>
+          </div>
         </div>
-        <div :class="{ mostarLi2: animacionActiva1 }" class="mostrarLi">
-          <select @change="notifyCategory" v-model="category" id="category">
-            <option
-              v-for="item in $store.state.itemsCompleta"
-              :key="item"
-              :value="item.titulo"
-            >
-              {{ item.titulo }}
-            </option>
-          </select>
-        </div>
-      </div>
-      <div class="filtroLi">
-        <div class="filtro2">
-          <button><i class="fa-solid fa-money-bill"></i>Precio Máximo</button>
-          <i
-            :class="{ flechaIconoAnimacion3: animacionActiva3 }"
-            @click="rotarIconos3()"
-            class="fa-solid fa-caret-left flechaIcono"
-          ></i>
-        </div>
-        <div :class="{ mostarLi3: animacionActiva3 }" class="mostrarLi">
-          <input
-            @change="notifyPrecio"
-            v-model="precioFiltro"
-            id="precioFiltro"
-            min="0"
-            :max="numeroMax+1"
-            step="1"
-            type="range"
-          />
-          <input id="inputPrecio" @change="notifyPrecio" type="number" v-model="precioFiltro" placeholder="Precio Máximo">
+        <div class="filtroLi">
+          <div class="filtro2">
+            <button><i class="fa-solid fa-money-bill"></i>Precio Máximo</button>
+            <i
+              :class="{ flechaIconoAnimacion3: animacionActiva3 }"
+              @click="rotarIconos3()"
+              class="fa-solid fa-caret-left flechaIcono"
+            ></i>
+          </div>
+          <div :class="{ mostarLi3: animacionActiva3 }" class="mostrarLi">
+            <input
+              @change="notifyPrecio"
+              v-model="precioFiltro"
+              id="precioFiltro"
+              min="0"
+              :max="numeroMax+1"
+              step="1"
+              type="range"
+            />
+            <input id="inputPrecio" @change="notifyPrecio" type="number" v-model="precioFiltro" placeholder="Precio Máximo">
 
+          </div>
         </div>
-      </div>
-      <div class="filtroLi">
-        <div class="filtro2">
-          <button>
-            <i class="fa-solid fa-star-of-life"></i>Estado del Productos
-          </button>
-          <i
+        <div class="filtroLi">
+          <div class="filtro2">
+            <button>
+              <i class="fa-solid fa-star-of-life"></i>Estado del Productos
+            </button>
+            <i
+              :class="{ flechaIconoAnimacion4: animacionActiva4 }"
+              @click="rotarIconos4()"
+              class="fa-solid fa-caret-left flechaIcono"
+            ></i>
+          </div>
+          <div :class="{ mostarLi4: animacionActiva4 }" class="mostrarLi">
+            <select @change="notify" v-model="message" id="message">
+              <option value="Nuevo con etiqueta">Nuevo con etiqueta</option>
+              <option value="Nuevo sin etiqueta">Nuevo sin etiqueta</option>
+              <option value="Muy bueno">Muy bueno</option>
+              <option value="Bueno">Bueno</option>
+              <option value="Satisfactorio">Satisfactorio</option>
+            </select>
+          </div>
+        </div>
+        <div class="filtroLi">
+          <div class="filtro2">
+            <button><i class="fa-solid fa-sort"></i>Ordenar Por</button>
+            <i
             :class="{ flechaIconoAnimacion4: animacionActiva4 }"
-            @click="rotarIconos4()"
+            @click="rotarIconos2()"
             class="fa-solid fa-caret-left flechaIcono"
-          ></i>
-        </div>
-        <div :class="{ mostarLi4: animacionActiva4 }" class="mostrarLi">
-          <select @change="notify" v-model="message" id="message">
-            <option value="Nuevo con etiqueta">Nuevo con etiqueta</option>
-            <option value="Nuevo sin etiqueta">Nuevo sin etiqueta</option>
-            <option value="Muy bueno">Muy bueno</option>
-            <option value="Bueno">Bueno</option>
-            <option value="Satisfactorio">Satisfactorio</option>
-          </select>
-        </div>
-      </div>
-      <div class="filtroLi">
-        <div class="filtro2">
-          <button><i class="fa-solid fa-sort"></i>Ordenar Por</button>
-          <i
-          :class="{ flechaIconoAnimacion4: animacionActiva4 }"
-          @click="rotarIconos2()"
-          class="fa-solid fa-caret-left flechaIcono"
-          ></i>
-        </div>
-        <div :class="{ mostarLi2: animacionActiva2 }" class="mostrarLi">
-          <div class="mostarLi">
-            <select @change="notifyOrdenar" v-model="ordenar" id="ordenar">
-            <option value="mayor">Precio: de mayor a menor</option>
-            <option value="menor">Precio: de menor a mayor</option>
-          </select>
+            ></i>
+          </div>
+          <div :class="{ mostarLi2: animacionActiva2 }" class="mostrarLi">
+            <div class="mostarLi">
+              <select @change="notifyOrdenar" v-model="ordenar" id="ordenar">
+              <option value="mayor">Precio: de mayor a menor</option>
+              <option value="menor">Precio: de menor a mayor</option>
+            </select>
+            </div>
           </div>
         </div>
       </div>
+      
     </ul>
   </div>
 </template>
@@ -122,7 +127,8 @@ export default {
       animacionActiva3: false,
       animacionActiva4: false,
       buttonTrigger: false,
-      numeroMax: 1000000
+      numeroMax: 1000000,
+      toggleFiltro: true
     };
   },
   methods: {

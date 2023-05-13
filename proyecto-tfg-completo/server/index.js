@@ -42,13 +42,13 @@ io.on('connection', (socket) => {
   });
 });
 
-// try {
-//   cron.schedule('*/5 * * * * *', async function() {
-//     await axios.get('http://localhost:3001/delExpiredProductos')
-//   });
-// } catch (error) {
-//   console.log(error);
-// }
+try {
+  cron.schedule('*/5 * * * * *', async function() {
+    await axios.get('http://localhost:3001/delExpiredProductos')
+  });
+} catch (error) {
+  console.log(error);
+}
 
 
 server.listen(3001, () => {
