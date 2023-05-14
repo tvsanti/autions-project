@@ -96,7 +96,7 @@ export default {
       };
 
       await axios
-        .get(`http://[::1]:3001/miDinero/${cookie.id_cliente}`)
+        .get(`http://167.99.240.123:81/miDinero/${cookie.id_cliente}`)
         .then(async (res) => {
           console.log(res.data.saldo.saldo < parseInt(importe));
           console.log(importe);
@@ -109,7 +109,7 @@ export default {
             this.socket.emit("puja", data);
             await axios
             .post(
-              `http://[::1]:3001/subasta/${this.$route.params.id}/${this.$route.params.categoria}/${this.$route.params.titulo}`,
+              `http://167.99.240.123:81/subasta/${this.$route.params.id}/${this.$route.params.categoria}/${this.$route.params.titulo}`,
               { price: importe, ultimoPujador: cookie.id_cliente }
               )
               .then((res) => {
@@ -133,8 +133,8 @@ export default {
         created_by,
       };
       object["cookie"] = this.$cookies.get("loginCookie").id_cliente;
-      await axios.post(`http://[::1]:3001/favourites`, object);
-      await axios.post(`http://[::1]:3001/favouritesProducto`, object);
+      await axios.post(`http://167.99.240.123:81/favourites`, object);
+      await axios.post(`http://167.99.240.123:81/favouritesProducto`, object);
     },
     async delFavourites(id_producto, created_by) {
       const object = {
@@ -143,8 +143,8 @@ export default {
       };
       object["cookie"] = this.$cookies.get("loginCookie").id_cliente;
       console.log(object);
-      await axios.post(`http://[::1]:3001/favouritesDel`, object);
-      await axios.post(`http://[::1]:3001/favouritesProductoDel`, object);
+      await axios.post(`http://167.99.240.123:81/favouritesDel`, object);
+      await axios.post(`http://167.99.240.123:81/favouritesProductoDel`, object);
     },
   },
   created() {
@@ -153,14 +153,14 @@ export default {
     }, 1000);
   },
   async mounted() {
-    this.socket = io("http://[::1]:3001");
+    this.socket = io("http://167.99.240.123:81");
     this.socket.on("puja", (data) => {
       this.prouctContent.price = data.importe;
       this.userPuja = data.user;
     });
     await axios
       .get(
-        `http://[::1]:3001/subasta/${this.$route.params.id}/${this.$route.params.categoria}/${this.$route.params.titulo}`
+        `http://167.99.240.123:81/subasta/${this.$route.params.id}/${this.$route.params.categoria}/${this.$route.params.titulo}`
       )
       .then((res) => {
         const { data } = res;
@@ -170,7 +170,7 @@ export default {
     
     console.log(this.$route.params.id);
     await axios
-      .get(`http://[::1]:3001/subasta/${this.$route.params.id}`)
+      .get(`http://167.99.240.123:81/subasta/${this.$route.params.id}`)
       .then((res) => {
         console.log(this.$route.params.id);
         const { data } = res;
@@ -178,7 +178,7 @@ export default {
       });
 
     await axios
-      .get(`http://[::1]:3001/perfil/${this.$route.params.id}`)
+      .get(`http://167.99.240.123:81/perfil/${this.$route.params.id}`)
       .then((res) => {
         const { data } = res;
         this.datosUsuario = data[0];
