@@ -7,7 +7,9 @@ const bodyParser = require('body-parser');
 const http = require('http');
 const cron = require('node-cron')
 const socketIo = require('socket.io');
-const axios = require('axios')
+require('dotenv').config()
+const axios = require('axios');
+const { PORT } = require("./config.js");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
@@ -51,6 +53,6 @@ try {
 }
 
 
-server.listen(3001, () => {
-  console.log('Servidor http://localhost:3001/api');
+server.listen(PORT, () => {
+  console.log(`Servidor http://localhost:${PORT}/api`);
 });
