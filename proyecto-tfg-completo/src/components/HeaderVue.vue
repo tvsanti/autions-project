@@ -8,7 +8,7 @@
     <nav class="navbar navbar-expand-lg ">
       <div class="container-fluid">
         <router-link class="navbar-brand" to="/">
-          <img src="../../../img/logo1.png" alt="" />
+          <img src="../../img/logo1.png" alt="" />
         </router-link>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
