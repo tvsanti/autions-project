@@ -17,7 +17,7 @@ export default {
     const cookie = this.$cookies.get("loginCookie");
     console.log(this.$store.state.siguienteSaldo);
     await axios.post(
-      `http://164.90.219.15:3001/miDineroCancelado/${cookie.id_cliente}`
+      `http://167.99.240.123:3001/miDineroCancelado/${cookie.id_cliente}`
     );
   },
 };

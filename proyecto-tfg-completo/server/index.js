@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-  origin: 'http://164.90.219.15:8080'
+  origin: 'http://167.99.240.123:8080'
 }));
 app.use('/', Router);
 
@@ -25,7 +25,7 @@ const server = http.createServer(app);
 
 const io = socketIo(server, {
   cors: {
-    origin: "http://164.90.219.15:8080", // reemplazar con el dominio permitido
+    origin: "http://167.99.240.123:8080", // reemplazar con el dominio permitido
     methods: ["GET", "POST"],
     transports: ['websocket', 'polling'],
     credentials: true // permitir credenciales
@@ -46,7 +46,7 @@ io.on('connection', (socket) => {
 
 try {
   cron.schedule('*/5 * * * * *', async function() {
-    await axios.get('http://164.90.219.15:3001/delExpiredProductos')
+    await axios.get('http://167.99.240.123:3001/delExpiredProductos')
   });
 } catch (error) {
   console.log(error);
@@ -54,5 +54,5 @@ try {
 
 
 server.listen(PORT, () => {
-  console.log(`Servidor http://164.90.219.15:${PORT}/api`);
+  console.log(`Servidor http://167.99.240.123:${PORT}/api`);
 });

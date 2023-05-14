@@ -206,8 +206,8 @@ router.post('/pujar/:id', async (req, res) => {
                 quantity: 1,
             }],
             mode: 'payment',
-            success_url: `http://164.90.219.15:8080/success`,
-            cancel_url: `http://164.90.219.15:8080/cancel`,
+            success_url: `http://167.99.240.123:8080/success`,
+            cancel_url: `http://167.99.240.123:8080/cancel`,
         });
         await connection.query('UPDATE cliente SET nextSaldo = ? WHERE id_cliente = ?', [req.body.price, req.params.id]);
 

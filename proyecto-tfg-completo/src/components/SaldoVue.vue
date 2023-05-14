@@ -35,7 +35,7 @@ export default {
       console.log(this.$store.state.siguienteSaldo);
       await axios
         .post(
-          `http://164.90.219.15:3001/pujar/${cookie.id_cliente}`,
+          `http://167.99.240.123:3001/pujar/${cookie.id_cliente}`,
           { price: this.cantidad }
         )
         .then((res) => {
@@ -47,7 +47,7 @@ export default {
     const cookie = this.$cookies.get("loginCookie")
     await axios
       .get(
-        `http://164.90.219.15:3001/miDinero/${cookie.id_cliente}`,
+        `http://167.99.240.123:3001/miDinero/${cookie.id_cliente}`,
       )
       .then((res) => {
         this.miDinero = res.data.saldo.saldo
