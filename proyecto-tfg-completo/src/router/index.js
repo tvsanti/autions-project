@@ -76,11 +76,6 @@ const router = createRouter({
             }
         },
         {
-            path: '/:pathMatch(.*)*',
-            name: 'Error404Vue',
-            component: Error404Vue
-        },
-        {
             path: '/success',
             name: 'Success',
             component: SuccessVue
