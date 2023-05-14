@@ -7,7 +7,6 @@ import Subasta from "../views/SubastaVue"
 import Buscar from "../views/BuscarVue"
 import Perfil from '../views/PerfilVue.vue'
 import Favourites from '../views/FavouritesVue.vue'
-import Error404Vue from '../views/Error404Vue.vue'
 import SuccessVue from '../views/SuccessVue.vue'
 import CancelVue from '../views/CancelVue.vue'
 import VueCookies from 'vue-cookies'
