@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-  origin: 'http://167.99.240.123:8080'
+  origin: 'http://167.99.240.123'
 }));
 app.use('/', Router);
 
@@ -25,7 +25,7 @@ const server = http.createServer(app);
 
 const io = socketIo(server, {
   cors: {
-    origin: "http://167.99.240.123:8080", // reemplazar con el dominio permitido
+    origin: "http://167.99.240.123", // reemplazar con el dominio permitido
     methods: ["GET", "POST"],
     transports: ['websocket', 'polling'],
     credentials: true // permitir credenciales
