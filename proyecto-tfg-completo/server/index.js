@@ -46,7 +46,7 @@ io.on('connection', (socket) => {
 
 try {
   cron.schedule('*/5 * * * * *', async function() {
-    await axios.get('http://167.99.240.123:81/delExpiredProductos')
+    await axios.get('http://167.99.240.123:3001/delExpiredProductos')
   });
 } catch (error) {
   console.log(error);

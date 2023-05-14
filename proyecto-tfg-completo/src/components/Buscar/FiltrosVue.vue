@@ -147,7 +147,7 @@ export default {
   },
   async mounted() {
     await axios
-      .get(`http://167.99.240.123:81/api/${this.$route.params.id}`)
+      .get(`http://167.99.240.123:3001/api/${this.$route.params.id}`)
       .then((res) => {
         const { data } = res;
         this.numeroMax = data[data.length-1][0].numero_maximo

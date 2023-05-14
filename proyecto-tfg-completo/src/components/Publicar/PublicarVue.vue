@@ -77,12 +77,12 @@ export default {
         productos.append('files', file)
       })
 
-      await axios.post('http://167.99.240.123:81/api/localimages/productos', productos);
+      await axios.post('http://167.99.240.123:3001/api/localimages/productos', productos);
       
       let cookie = this.$cookies.get('loginCookie')
       this.formulario.created_by = cookie.id_cliente
       let objeto = JSON.parse(JSON.stringify(this.formulario));
-      await axios.post("http://167.99.240.123:81/api", objeto)
+      await axios.post("http://167.99.240.123:3001/api", objeto)
       window.location.href = 'http://167.99.240.123/'
 
 

@@ -35,11 +35,11 @@ export default {
         const perfilImg = new FormData();
         perfilImg.append("file", this.file);
   
-        await axios.post("http://167.99.240.123:81/api/localimages/perfil",perfilImg);
+        await axios.post("http://167.99.240.123:3001/api/localimages/perfil",perfilImg);
       }
       if (this.formularioEditar.user != "") {
         console.log(this.formularioEditar.user);
-        await axios.post("http://167.99.240.123:81/api/editarPerfil", this.formularioEditar)
+        await axios.post("http://167.99.240.123:3001/api/editarPerfil", this.formularioEditar)
       }
       window.location.reload()
     },
