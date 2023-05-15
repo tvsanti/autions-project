@@ -96,11 +96,11 @@ export default {
         created_by,
       };
       object["cookie"] = this.$cookies.get("loginCookie").id_cliente;
-      await axios.post(`http://167.99.240.123:81/favourites`, object);
-      await axios.post(`http://167.99.240.123:81/favouritesProducto`, object);
+      await axios.post(`http://167.99.240.123:81/api/favourites`, object);
+      await axios.post(`http://167.99.240.123:81/api/favouritesProducto`, object);
     },
     async delSubasta(id_producto) {
-      await axios.post(`http://167.99.240.123:81/delSubasta`, { id_producto });
+      await axios.post(`http://167.99.240.123:81/api/delSubasta`, { id_producto });
       this.showPopup = false;
     },
     deleteSubasta() {
@@ -112,14 +112,14 @@ export default {
         created_by,
       };
       object["cookie"] = this.$cookies.get("loginCookie").id_cliente;
-      await axios.post(`http://167.99.240.123:81/favouritesDel`, object);
-      await axios.post(`http://167.99.240.123:81/favouritesProductoDel`, object);
+      await axios.post(`http://167.99.240.123:81/api/favouritesDel`, object);
+      await axios.post(`http://167.99.240.123:81/api/favouritesProductoDel`, object);
     },
   },
   async mounted() {
     const cookie = this.$cookies.get("loginCookie");
     await axios
-      .get(`http://167.99.240.123:81/perfilLocal/${cookie.id_cliente}`)
+      .get(`http://167.99.240.123:81/api/perfilLocal/${cookie.id_cliente}`)
       .then((res) => {
         const  [data]  = res.data;
         this.items = data[1];

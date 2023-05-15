@@ -1,6 +1,6 @@
 const express = require('express')
-const router = express.Router()
-const app = express();
+const router = expres/apis.Router()
+cons/apit app = express();
 
 const db = require('../database')
 const connection = db()
@@ -146,7 +146,7 @@ router.get('/api/:id', async (req, res) => {
     }
 })
 
-router.get('/subasta/:id/:categoria/:titulo', async (req, res) => {
+router.get('/api/subasta/:id/:categoria/:titulo', async (req, res) => {
     try {
         const [results] = await connection.query('SELECT * FROM producto WHERE id_producto = ? and categoria = ? and title = ?', [req.params.id, req.params.categoria, req.params.titulo])
         res.json(results);
@@ -155,7 +155,7 @@ router.get('/subasta/:id/:categoria/:titulo', async (req, res) => {
         res.status(404).send("Error")
     }
 })
-router.get('/perfil/:id', async (req, res) => {
+router.get('/api/perfil/:id', async (req, res) => {
     try {
         const [[getId]] = await connection.query('SELECT created_by FROM producto WHERE id_producto = ?', [req.params.id])
         const [results] = await connection.query('SELECT cliente.*, producto.* FROM cliente INNER JOIN producto ON cliente.id_cliente = producto.created_by WHERE producto.created_by = ?', [getId.created_by])
@@ -166,7 +166,7 @@ router.get('/perfil/:id', async (req, res) => {
         res.status(404).send("Error")
     }
 })
-router.get('/perfilLocal/:id', async (req, res) => {
+router.get('/api/perfilLocal/:id', async (req, res) => {
     try {
         const [resultsC] = await connection.query('SELECT * FROM cliente WHERE id_cliente = ?', [req.params.id])
         const [resultsP] = await connection.query('SELECT * FROM producto WHERE created_by = ?', [req.params.id])
@@ -179,7 +179,7 @@ router.get('/perfilLocal/:id', async (req, res) => {
     }
 })
 
-router.post('/subasta/:id/:categoria/:titulo', async (req, res) => {
+router.post('/api/subasta/:id/:categoria/:titulo', async (req, res) => {
     try {
         const [results] = await connection.query('UPDATE producto SET price = ?, ultimoPujador = ? WHERE id_producto = ? ', [req.body.price,req.body.ultimoPujador ,req.params.id]);
         res.send(results);
@@ -188,7 +188,7 @@ router.post('/subasta/:id/:categoria/:titulo', async (req, res) => {
         res.status(404).send("Error")
     }
 })
-router.post('/pujar/:id', async (req, res) => {
+router.post('/api/pujar/:id', async (req, res) => {
     try {
         const [resultsP] = await connection.query('SELECT * FROM cliente WHERE id_cliente = ?', [req.params.id]);
         const session = await stripe.checkout.sessions.create({
@@ -218,7 +218,7 @@ router.post('/pujar/:id', async (req, res) => {
         res.status(404).send("Error")
     }
 })
-router.get('/miDinero/:id', async (req, res) => {
+router.get('/api/miDinero/:id', async (req, res) => {
     try {
         const [results] = await connection.query('SELECT saldo, id_cliente FROM cliente WHERE id_cliente = ?', [req.params.id]);
         const [resultsP] = await connection.query('SELECT created_by FROM producto WHERE created_by = ?', [results[0].id_cliente]);
@@ -230,7 +230,7 @@ router.get('/miDinero/:id', async (req, res) => {
     }
 })
 
-router.post('/miDinero/:id', async (req, res) => {
+router.post('/api/miDinero/:id', async (req, res) => {
     try {
         const [resultsD] = await connection.query('SELECT nextSaldo,saldo FROM cliente WHERE id_cliente = ?', [req.params.id]);
         let results
@@ -247,7 +247,7 @@ router.post('/miDinero/:id', async (req, res) => {
     }
 
 })
-router.post('/miDineroCancelado/:id', async (req, res) => {
+router.post('/api/miDineroCancelado/:id', async (req, res) => {
     try {
         const [results] = await connection.query('UPDATE cliente SET nextSaldo = ? WHERE id_cliente = ?', [0, req.params.id]);
         res.json(results[0])
@@ -258,7 +258,7 @@ router.post('/miDineroCancelado/:id', async (req, res) => {
 })
 
 
-router.post('/delSubasta', async (req, res) => {
+router.post('/api/delSubasta', async (req, res) => {
     try {
         const { id_producto } = req.body
         const [results] = await connection.query('DELETE FROM producto WHERE id_producto = ?', [id_producto])
@@ -269,7 +269,7 @@ router.post('/delSubasta', async (req, res) => {
     }
 })
 
-router.get('/subasta/:id/', async (req, res) => {
+router.get('/api/subasta/:id/', async (req, res) => {
     try {
         const folderPath = `../public/images/productos/${req.params.id}`;
         fs.readdir(folderPath, (err, files) => {
@@ -321,7 +321,7 @@ router.post('/api/editarPerfil', async (req, res) => {
 });
 
 
-router.post('/register', async (req, res) => {
+router.post('/api/register', async (req, res) => {
     try {
         const objeto = req.body
         const [mailExists] = await connection.query('SELECT mail FROM cliente WHERE mail = ?', [objeto.mail])
@@ -342,7 +342,7 @@ router.post('/register', async (req, res) => {
     }
 })
 
-router.post('/login', async (req, res) => {
+router.post('/api/login', async (req, res) => {
     try {
         const objeto = req.body
         const [getPassword] = await connection.query('SELECT password FROM cliente WHERE mail = ?', [objeto.mail])
@@ -360,7 +360,7 @@ router.post('/login', async (req, res) => {
 
 
 
-router.post('/favourites', async (req, res) => {
+router.post('/api/favourites', async (req, res) => {
     try {
         const [[getLikes]] = await connection.query('SELECT favoritos FROM cliente WHERE id_cliente = ?', [req.body.cookie])
         let favoritos = getLikes?.favoritos
@@ -380,7 +380,7 @@ router.post('/favourites', async (req, res) => {
 
 
 
-router.post('/favouritesProducto', async (req, res) => {
+router.post('/api/favouritesProducto', async (req, res) => {
     try {
         const [[getFavoritos]] = await connection.query('SELECT favoritos FROM producto WHERE id_producto = ?', [req.body.id_producto])
         let favoritosProducto = getFavoritos?.favoritos
@@ -400,7 +400,7 @@ router.post('/favouritesProducto', async (req, res) => {
 
 
 
-router.post('/favouritesDel', async (req, res) => {
+router.post('/api/favouritesDel', async (req, res) => {
     try {
         const [[getLikes]] = await connection.query('SELECT favoritos FROM cliente WHERE id_cliente = ?', [req.body.cookie])
         let favoritos = getLikes?.favoritos
@@ -418,7 +418,7 @@ router.post('/favouritesDel', async (req, res) => {
 
 
 
-router.post('/favouritesProductoDel', async (req, res) => {
+router.post('/api/favouritesProductoDel', async (req, res) => {
     try {
         const [[getFavoritos]] = await connection.query('SELECT favoritos FROM producto WHERE id_producto = ?', [req.body.id_producto])
         let favoritosProducto = getFavoritos?.favoritos
@@ -439,7 +439,7 @@ router.post('/favouritesProductoDel', async (req, res) => {
 
 
 
-router.get('/favourites/:id', async (req, res) => {
+router.get('/api/favourites/:id', async (req, res) => {
     try {
 
         let [response] = await connection.query('SELECT favoritos FROM cliente WHERE id_cliente = ?', [req.params.id])
@@ -458,7 +458,7 @@ router.get('/favourites/:id', async (req, res) => {
         res.status(404).send(error)
     }
 })
-router.get('/delExpiredProductos', async (req, res) => {
+router.get('/api/delExpiredProductos', async (req, res) => {
     try {
         const [response] = await connection.query('SELECT * FROM producto WHERE time_left < NOW()')
         response.forEach(async (subasta) => {
@@ -479,4 +479,4 @@ router.get('/delExpiredProductos', async (req, res) => {
 });
 
 
-module.exports = router
+module.exports = route/apir
