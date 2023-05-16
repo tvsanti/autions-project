@@ -17,7 +17,7 @@
         <input v-model="formularioLogin.mail" type="text" />
         <label>Contraseña</label>
         <input v-model="formularioLogin.password" type="password" />
-        <a href="">¿Has olvidado la contraseña?</a>
+        <span v-if="mensajeLogin">La contraseña o el correo es incorrecto</span>
         <input id="submitIS" type="submit" value="Iniciar sesión" />
       </form>
       <form
@@ -63,6 +63,7 @@ export default {
         mail: "",
         password: "",
       },
+      mensajeLogin: false,
       cookie: "",
     };
   },
@@ -78,10 +79,11 @@ export default {
     },
     async registerPost() {
       if (this.validatePassowrd(this.formularioRegister.password)) {
-        await axios.post(
-          "http://localhost:3001/register",
-          this.formularioRegister
-          );
+        await axios.post("http://localhost:3001/register",this.formularioRegister).then(res => {
+          if (res) {
+            window.location.reload()
+          }
+        })
         } else {
         this.passwordNoValida = true;
       }
@@ -89,12 +91,17 @@ export default {
     async loginPost() {
       await axios
         .post("http://localhost:3001/login", this.formularioLogin)
-        .then((res) => (this.cookie = res.data));
+        .then((res) =>  {
+          this.cookie = res.data
+        });
       this.$cookies.remove("loginCookie");
+      
       if (this.cookie) {
         this.$cookies.set("loginCookie", this.cookie);
         this.TogglePopup();
         this.$forceUpdate();
+      }else{
+        this.mensajeLogin = true
       }
     },
   },

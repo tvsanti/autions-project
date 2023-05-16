@@ -7,8 +7,8 @@ export default createStore({
         siguienteSaldo: 0,
         items: [
             {
-                titulo: "Todas las categorias",
-                icon: "fas fa-eye",
+                titulo: "Joyas",
+                icon: "fas fa-gem",
             },
             {
                 titulo: "Motor",
@@ -59,8 +59,8 @@ export default createStore({
         ],
         itemsCompleta: [
             {
-                titulo: "Todas las categorias",
-                icon: "fas fa-eye",
+                titulo: "Joyas",
+                icon: "fas fa-gem",
             },
             {
                 titulo: "Motor",

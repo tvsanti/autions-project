@@ -1,7 +1,10 @@
 <template>
   <div class="filtrosVue">
-    <i v-if="toggleFiltro" @click="toggleFiltro = !toggleFiltro" class="fa-solid fa-arrow-right esconder"></i>
-    <i v-if="!toggleFiltro" @click="toggleFiltro = !toggleFiltro" class="fa-solid fa-arrow-left esconder"></i>
+    <div class="flechaFiltro">
+      <i v-if="toggleFiltro" @click="toggleFiltro = !toggleFiltro" class="fa-solid fa-arrow-right esconder"><span>Filtros</span></i>
+      <i v-if="!toggleFiltro" @click="toggleFiltro = !toggleFiltro" class="fa-solid fa-arrow-left esconder"><span>Filtros</span></i>
+      
+    </div>
     <ul v-if="!toggleFiltro" class="ul1">
       <div>
         <div class="filtroLi">

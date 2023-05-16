@@ -346,11 +346,15 @@ router.post('/login', async (req, res) => {
     try {
         const objeto = req.body
         const [getPassword] = await connection.query('SELECT password FROM cliente WHERE mail = ?', [objeto.mail])
-        const [response] = await connection.query('SELECT * FROM cliente WHERE mail = ? AND password = ?', [objeto.mail, getPassword[0].password])
-        const isMatch = await bcrypt.compare(objeto.password, getPassword[0].password);
-        if (isMatch) res.send(JSON.stringify(response[0]))
+        if (getPassword.length>0) {
+            const [response] = await connection.query('SELECT * FROM cliente WHERE mail = ? AND password = ?', [objeto.mail, getPassword[0].password])
+            const isMatch = await bcrypt.compare(objeto.password, getPassword[0].password);
+            if (isMatch) res.send(JSON.stringify(response[0]))
+        }
+        res.send(false)
 
     } catch (error) {
+        console.log(error);
         res.status(404).send(error)
     }
 })
