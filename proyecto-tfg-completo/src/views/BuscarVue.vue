@@ -97,8 +97,8 @@ export default {
         created_by,
       };
       object["cookie"] = this.$cookies.get("loginCookie").id_cliente;
-      await axios.post(`http://167.99.240.123:81/favourites`, object);
-      await axios.post(`http://167.99.240.123:81/favouritesProducto`, object);
+      await axios.post(`http://167.99.240.123:81/api/favourites`, object);
+      await axios.post(`http://167.99.240.123:81/api/favouritesProducto`, object);
     },
     async delFavourites(id_producto, created_by) {
       const object = {
@@ -107,8 +107,8 @@ export default {
       };
       object["cookie"] = this.$cookies.get("loginCookie").id_cliente;
       console.log(object);
-      await axios.post(`http://167.99.240.123:81/favouritesDel`, object);
-      await axios.post(`http://167.99.240.123:81/favouritesProductoDel`, object);
+      await axios.post(`http://167.99.240.123:81/api/favouritesDel`, object);
+      await axios.post(`http://167.99.240.123:81/api/favouritesProductoDel`, object);
     },
     async actualizar() {
       let objeto = {
