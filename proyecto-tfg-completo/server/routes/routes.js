@@ -9,7 +9,7 @@ const fs = require('fs');
 const bcrypt = require('bcrypt');
 const stripe = require("stripe")('sk_test_51N5WqCJSil5ToMv4p5W88EWsDXCOV2OPD5fhQBxLjUNOhrLRJ3az2rgjgugTXoV63tAPNer7AZnZERFuSv2ij80S00cVdCgv4W');
 
-const dirFolder = '../public/images/productos/';
+const dirFolder = '../miweb/proyecto-tfg/proyecto-tfg-completo/images/productos/';
 const dir = fs.readdirSync(dirFolder);
 app.locals.cont = 0
 
@@ -22,7 +22,7 @@ const storage = multer.diskStorage({
             app.locals.cont++
         }
         app.locals.max = max
-        const folderPath = `../public/images/productos/${max}`;
+        const folderPath = `../miweb/proyecto-tfg/proyecto-tfg-completo/images/productos/${max}`;
         fs.mkdirSync(folderPath, { recursive: true });
         cb(null, folderPath)
     },
@@ -32,7 +32,7 @@ const storage = multer.diskStorage({
 });
 const storagePerfil = multer.diskStorage({
     destination: async (req, file, cb) => {
-        const folderPath = `../public/images/user/${app.locals.id}`;
+        const folderPath = `../miweb/proyecto-tfg/proyecto-tfg-completo/images/user/${app.locals.id}`;
         fs.mkdirSync(folderPath, { recursive: true });
 
         cb(null, folderPath)
@@ -206,8 +206,8 @@ router.post('/pujar/:id', async (req, res) => {
                 quantity: 1,
             }],
             mode: 'payment',
-            success_url: `http://localhost:8080/success`,
-            cancel_url: `http://localhost:8080/cancel`,
+            success_url: `http://167.99.240.123:80/success`,
+            cancel_url: `http://167.99.240.123:80/cancel`,
         });
         await connection.query('UPDATE cliente SET nextSaldo = ? WHERE id_cliente = ?', [req.body.price, req.params.id]);
 
@@ -271,7 +271,7 @@ router.post('/delSubasta', async (req, res) => {
 
 router.get('/subasta/:id/', async (req, res) => {
     try {
-        const folderPath = `../public/images/productos/${req.params.id}`;
+        const folderPath = `../miweb/proyecto-tfg/proyecto-tfg-completo/images/productos/${req.params.id}`;
         fs.readdir(folderPath, (err, files) => {
             files = files.map(i => `/images/productos/${req.params.id}/${i}`)
             res.send(files)
@@ -286,7 +286,7 @@ router.get('/subasta/:id/', async (req, res) => {
 router.post('/api', async (req, res) => {
     try {
         const max = app.locals.max
-        const dirImg = `../public/images/productos/${max}`;
+        const dirImg = `../miweb/proyecto-tfg/proyecto-tfg-completo/images/productos/${max}`;
         const fileInDirImg = fs.readdirSync(dirImg);
         const objeto = {
             title: req.body.titulo,
@@ -301,7 +301,7 @@ router.post('/api', async (req, res) => {
     
         const [results] = await connection.query('INSERT INTO producto SET ?', [objeto]);
         console.log('max 2 ==', max);
-        let directoryPath = `../public/images/productos/${max}`;
+        let directoryPath = `../miweb/proyecto-tfg/proyecto-tfg-completo/images/productos/${max}`;
         fs.mkdirSync(directoryPath, { recursive: true });
         res.send(results);
     } catch (error) {

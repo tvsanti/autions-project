@@ -18,7 +18,7 @@ export default {
     console.log(this.$store.state.siguienteSaldo);
     await axios
       .post(
-        `http://localhost:3001/miDinero/${cookie.id_cliente}`,{precio: this.$store.state.siguienteSaldo}
+        `http://167.99.240.123:81/miDinero/${cookie.id_cliente}`,{precio: this.$store.state.siguienteSaldo}
       )
       .then((res) => {
         console.log(res);

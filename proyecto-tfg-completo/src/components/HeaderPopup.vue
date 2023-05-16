@@ -79,7 +79,7 @@ export default {
     },
     async registerPost() {
       if (this.validatePassowrd(this.formularioRegister.password)) {
-        await axios.post("http://localhost:3001/register",this.formularioRegister).then(res => {
+        await axios.post("http://167.99.240.123:81/register",this.formularioRegister).then(res => {
           if (res) {
             window.location.reload()
           }
@@ -90,7 +90,7 @@ export default {
     },
     async loginPost() {
       await axios
-        .post("http://localhost:3001/login", this.formularioLogin)
+        .post("http://167.99.240.123:81/login", this.formularioLogin)
         .then((res) =>  {
           this.cookie = res.data
         });
