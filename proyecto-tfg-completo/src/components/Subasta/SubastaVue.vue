@@ -56,7 +56,7 @@
           Puja actual: {{ userPuja }} <b>{{ prouctContent.price }}€</b>
         </h2>
         <div>
-          <input type="text" placeholder="Importe de puja" />
+          <input type="number" placeholder="Importe de puja" />
           <button @click="pujar">Pujar</button>
         </div>
         <span v-if="mensajeError">No tienes suficiente dinero</span>
