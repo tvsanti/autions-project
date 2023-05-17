@@ -47,7 +47,8 @@
       <span
         >Fotos seleccionadas: <b>{{ numeroFotos }}</b></span
       >
-      <input id="inputEnviar" type="submit" value="Publicar" />
+      <input v-if="numeroFotos <= 4" id="inputEnviar" type="submit" value="Publicar" />
+      <span v-else>Debes agregar maximo 4 fotos</span>
     </form>
   </div>
 </template>
