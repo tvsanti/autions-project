@@ -67,7 +67,7 @@ export default {
       };
       await axios.post(`http://167.99.240.123:81/api/favourites`, object);
       object["cookie"] = this.$cookies.get("loginCookie").id_cliente;
-      await axios.post(`http://localhost:81/api/favouritesProducto`, object);
+      await axios.post(`http://167.99.240.123:81/api/favouritesProducto`, object);
       location.reload()
 
     },
@@ -78,8 +78,8 @@ export default {
       };
       object["cookie"] = this.$cookies.get("loginCookie").id_cliente;
       console.log(object);
-      await axios.post(`http://localhost:81/api/favouritesDel`, object);
-      await axios.post(`http://localhost:81/api/favouritesProductoDel`, object);
+      await axios.post(`http://167.99.240.123:81/api/favouritesDel`, object);
+      await axios.post(`http://167.99.240.123:81/api/favouritesProductoDel`, object);
       location.reload()
 
     },

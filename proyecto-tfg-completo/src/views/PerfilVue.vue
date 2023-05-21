@@ -96,8 +96,8 @@ export default {
         created_by,
       };
       object["cookie"] = this.$cookies.get("loginCookie").id_cliente;
-      await axios.post(`http://localhost:81/api/favourites`, object);
-      await axios.post(`http://localhost:81/api/favouritesProducto`, object);
+      await axios.post(`http://167.99.240.123:81/api/favourites`, object);
+      await axios.post(`http://167.99.240.123:81/api/favouritesProducto`, object);
       location.reload()
 
     },
