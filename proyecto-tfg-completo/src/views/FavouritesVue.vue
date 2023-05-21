@@ -86,10 +86,9 @@ export default {
       .get(`http://167.99.240.123:81/api/favourites/${cookie.id_cliente}`)
       .then((res) => {
         const { data } = res;
-        console.log(data);
         const cookie = this.$cookies.get("loginCookie");
-        data.map((i) => {
-          if (i.favoritos && cookie) {
+        data.map((i, index) => {
+          if (i?.favoritos && cookie) {
             i.favoritos
               .split(",")
               .map((i) => parseInt(i))
@@ -97,10 +96,14 @@ export default {
               ? (i.favoritos = true)
               : (i.favoritos = false);
           } else {
-            i.favoritos = false;
+            if (i != null) {
+              i.favoritos = false;
+            }else {
+              console.log(index);
+              data.splice(index,index+1)
+            }
           }
         });
-        console.log(data);
         this.items = data;
       });
   },

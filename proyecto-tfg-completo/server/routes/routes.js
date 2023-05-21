@@ -10,6 +10,7 @@ const bcrypt = require('bcrypt');
 const stripe = require("stripe")('sk_test_51N5WqCJSil5ToMv4p5W88EWsDXCOV2OPD5fhQBxLjUNOhrLRJ3az2rgjgugTXoV63tAPNer7AZnZERFuSv2ij80S00cVdCgv4W');
 
 const dirFolder = '../miweb/proyecto-tfg/proyecto-tfg-completo/images/productos/';
+fs.mkdirSync(dirFolder, {recursive: true})
 const dir = fs.readdirSync(dirFolder);
 app.locals.cont = 0
 
@@ -350,8 +351,9 @@ router.post('/login', async (req, res) => {
             const [response] = await connection.query('SELECT * FROM cliente WHERE mail = ? AND password = ?', [objeto.mail, getPassword[0].password])
             const isMatch = await bcrypt.compare(objeto.password, getPassword[0].password);
             if (isMatch) res.send(JSON.stringify(response[0]))
+        }else {
+            res.send(false)
         }
-        res.send(false)
 
     } catch (error) {
         console.log(error);

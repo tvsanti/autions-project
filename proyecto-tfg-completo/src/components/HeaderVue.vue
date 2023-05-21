@@ -14,32 +14,35 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="header-buttons navbar-nav collapse navbar-collapse" id="navbarTogglerDemo01">
-            <router-link class="nav-item heartButton" to="/favourites">
-              <i class="fa-regular fa-heart"></i>
-            </router-link>
-            <button class="nav-item" v-if="!$cookies.get('loginCookie')" @click="TogglePopup()">
-              Iniciar sesión | Registrarse
-            </button>
-            <button class="nav-item" v-else-if="$cookies.get('loginCookie')" @click="LogOut()">
-              Log Out
-            </button>
-            <div class="dropdown nav-item">
-            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Perfil
-            </a>
-      
-            <ul class="dropdown-menu">
-              <router-link to="/perfil"> Perfil </router-link>
-              <button @click="TogglePopupSaldo">
-                <i class="fa-solid fa-money-bill"></i>Saldo
-              </button>        
-            </ul>
-            </div>
               <router-link to="/publicar">
                 <button class="button-color">
                   <i class="fa-solid fa-circle-plus"></i>Publicar
                 </button>
               </router-link>
+            <div class="dropdown nav-item">
+              <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-user"></i> Perfil
+              </a>
+              
+              <ul class="dropdown-menu">
+                <router-link to="/perfil"><i class="fa-solid fa-user"></i>Perfil </router-link>
+                <button @click="TogglePopupSaldo">
+                  <i class="fa-solid fa-money-bill"></i>Saldo
+                </button>        
+              </ul>
+            </div>
+            <router-link class="nav-item heartButton" to="/favourites">
+              <button>
+                Favoritos <i class="fa-regular fa-heart"></i>
+              </button>
+            </router-link>
+            <button class="nav-item inicioSesion" v-if="!$cookies.get('loginCookie')" @click="TogglePopup()">
+              Iniciar sesión
+            </button>
+            <button class="nav-item inicioSesion" v-else-if="$cookies.get('loginCookie')" @click="LogOut()">
+              Log Out
+            </button>
+
           </div>            
       </div>
     </nav>

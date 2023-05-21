@@ -46,18 +46,20 @@
           {{ prouctContent.condicion }}
         </p>
         <h4>
-          Tiempo restante: {{ getTimeRemaining().days }}:{{
+          <i class="fa-solid fa-clock-rotate-left"></i> {{ getTimeRemaining().days }}:{{
             getTimeRemaining().hours
           }}:{{ getTimeRemaining().minutes }}:{{ getTimeRemaining().seconds }}
         </h4>
       </div>
       <div class="pujar">
-        <h2>
-          Puja actual: {{ userPuja }} <b>{{ prouctContent.price }}€</b>
-        </h2>
         <div>
-          <input type="text" placeholder="Importe de puja" />
-          <button @click="pujar">Pujar</button>
+          <h2>
+            <i class="fa-solid fa-dollar-sign"></i> Puja actual: {{ userPuja }} <b>{{ prouctContent.price }}€</b>
+          </h2>
+          <div>
+            <span>PUJAR</span>
+            <input @keyup.enter="pujar" type="number" placeholder="Importe de puja" />
+          </div>
         </div>
         <span v-if="mensajeError">No tienes suficiente dinero</span>
         <span v-else-if="mensajeErrorMenor">La puja debe ser mayor al precio del producto</span>

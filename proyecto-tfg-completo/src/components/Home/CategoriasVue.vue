@@ -1,7 +1,9 @@
 <template>
   <div class="categoriaVue">
-    <h1>Quieres comprar o subastar?</h1>
-    <h3>Descuble todas nuestras opciones</h3>
+    <div class="categoriaTitutlos">
+      <h1>¿Comprar o subastar?</h1>
+      <h3>Descuble todas nuestras opciones</h3>
+    </div>
     <div class="categorias">
       <div>
         <div v-for="item in $store.state.items" :key="item">
