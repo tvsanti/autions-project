@@ -30,24 +30,29 @@
           {{ estado.estado }}
         </option>
       </select>
-      
+
       <label for="">Fin de la subasta</label>
       <input v-model="formulario.time_left" type="datetime-local" />
-      
+
       <label for="">Precio</label>
       <input v-model="formulario.precio" type="number" />
-      <div id="arrastrarImagen">
+      <div id="arrastrarImagen" @dragover="onDragOver" @drop="onDrop">
         <label for="imagen">
           <h3>Arrastrar fotos</h3>
           <h3>- o -</h3>
           <h3>Seleccionar fotos</h3>
         </label>
-        <input ref="files" type="file" multiple @change="onFileChange" />
+        <input id="inputFile" ref="files" type="file" multiple @change="onFileChange" draggable="true" />
       </div>
       <span
         >Fotos seleccionadas: <b>{{ numeroFotos }}</b></span
       >
-      <input v-if="numeroFotos <= 4" id="inputEnviar" type="submit" value="Publicar" />
+      <input
+        v-if="numeroFotos <= 4"
+        id="inputEnviar"
+        type="submit"
+        value="Publicar"
+      />
       <span v-else>Debes agregar maximo 4 fotos</span>
     </form>
   </div>
@@ -66,34 +71,44 @@ export default {
         descripcion: "",
         estado: "",
         precio: "",
-
       },
-      files: []
+      files: [],
     };
   },
   methods: {
     async createPost() {
-      const productos = new FormData()
-      this.files.forEach(file => {
-        productos.append('files', file)
-      })
+      const productos = new FormData();
+      this.files.forEach((file) => {
+        productos.append("files", file);
+      });
 
-      await axios.post('http://localhost:3001/api/localimages/productos', productos);
-      
-      let cookie = this.$cookies.get('loginCookie')
-      this.formulario.created_by = cookie.id_cliente
+      await axios.post(
+        "http://localhost:3001/api/localimages/productos",
+        productos
+      );
+
+      let cookie = this.$cookies.get("loginCookie");
+      this.formulario.created_by = cookie.id_cliente;
       let objeto = JSON.parse(JSON.stringify(this.formulario));
-      await axios.post("http://localhost:3001/api", objeto)
-      window.location.href = 'http://localhost:8080/'
-
-
+      await axios.post("http://localhost:3001/api", objeto);
+      window.location.href = "http://localhost:8080/";
     },
     onFileChange(event) {
-      const files = this.$refs.files.files
-      this.files = [...this.files, ...files]
-      let imagenes = event.target.files
-      this.numeroFotos = imagenes.length
-    }
+      const files = this.$refs.files.files;
+      this.files = [...this.files, ...files];
+      let imagenes = event.target.files;
+      this.numeroFotos = imagenes.length;
+    },
+    onDragOver(event) {
+      event.preventDefault();
+    },
+
+    onDrop(event) {
+      event.preventDefault();
+      const files = event.dataTransfer.files;
+      this.files = [...this.files, ...files];
+      this.numeroFotos = this.files.length;
+    },
   },
 };
 </script>
