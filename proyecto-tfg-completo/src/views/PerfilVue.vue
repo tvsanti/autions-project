@@ -96,12 +96,16 @@ export default {
         created_by,
       };
       object["cookie"] = this.$cookies.get("loginCookie").id_cliente;
-      await axios.post(`http://167.99.240.123:81/api/favourites`, object);
-      await axios.post(`http://167.99.240.123:81/api/favouritesProducto`, object);
+      await axios.post(`http://localhost:3001/favourites`, object);
+      await axios.post(`http://localhost:3001/favouritesProducto`, object);
+      location.reload()
+
     },
     async delSubasta(id_producto) {
       await axios.post(`http://167.99.240.123:81/api/delSubasta`, { id_producto });
       this.showPopup = false;
+      location.reload()
+
     },
     deleteSubasta() {
       this.showPopup = true;
