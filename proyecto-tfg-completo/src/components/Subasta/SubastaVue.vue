@@ -135,8 +135,8 @@ export default {
         created_by,
       };
       object["cookie"] = this.$cookies.get("loginCookie").id_cliente;
-      await axios.post(`http://localhost:3001/favourites`, object);
-      await axios.post(`http://localhost:3001/favouritesProducto`, object);
+      await axios.post(`http://localhost:81/api/favourites`, object);
+      await axios.post(`http://localhost:81/api/favouritesProducto`, object);
       location.reload()
     },
     async delFavourites(id_producto, created_by) {
@@ -146,8 +146,8 @@ export default {
       };
       object["cookie"] = this.$cookies.get("loginCookie").id_cliente;
       console.log(object);
-      await axios.post(`http://localhost:3001/favouritesDel`, object);
-      await axios.post(`http://localhost:3001/favouritesProductoDel`, object);
+      await axios.post(`http://localhost:81/api/favouritesDel`, object);
+      await axios.post(`http://localhost:81/api/favouritesProductoDel`, object);
       location.reload()
     },
   },
