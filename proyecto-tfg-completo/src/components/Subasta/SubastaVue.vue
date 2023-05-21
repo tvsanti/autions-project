@@ -88,7 +88,7 @@ export default {
   },
   methods: {
     async pujar() {
-      const importe = document.querySelector('input[type="text"]').value;
+      const importe = document.querySelector('input[type="number"]').value;
       const cookie = this.$cookies.get("loginCookie");
 
       const data = {
