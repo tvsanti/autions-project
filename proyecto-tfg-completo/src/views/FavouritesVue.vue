@@ -68,6 +68,8 @@ export default {
       await axios.post(`http://localhost:3001/favourites`, object);
       object["cookie"] = this.$cookies.get("loginCookie").id_cliente;
       await axios.post(`http://localhost:3001/favouritesProducto`, object);
+      location.reload()
+
     },
     async delFavourites(id_producto, created_by) {
       const object = {
@@ -78,6 +80,8 @@ export default {
       console.log(object);
       await axios.post(`http://localhost:3001/favouritesDel`, object);
       await axios.post(`http://localhost:3001/favouritesProductoDel`, object);
+      location.reload()
+
     },
   },
   async mounted() {

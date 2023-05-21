@@ -98,10 +98,14 @@ export default {
       object["cookie"] = this.$cookies.get("loginCookie").id_cliente;
       await axios.post(`http://localhost:3001/favourites`, object);
       await axios.post(`http://localhost:3001/favouritesProducto`, object);
+      location.reload()
+
     },
     async delSubasta(id_producto) {
       await axios.post(`http://localhost:3001/delSubasta`, { id_producto });
       this.showPopup = false;
+      location.reload()
+
     },
     deleteSubasta() {
       this.showPopup = true;
