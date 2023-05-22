@@ -9,7 +9,7 @@ const fs = require('fs');
 const bcrypt = require('bcrypt');
 const stripe = require("stripe")('sk_test_51N5WqCJSil5ToMv4p5W88EWsDXCOV2OPD5fhQBxLjUNOhrLRJ3az2rgjgugTXoV63tAPNer7AZnZERFuSv2ij80S00cVdCgv4W');
 
-const dirFolder = '../miweb/proyecto-tfg/proyecto-tfg-completo/images/productos/';
+const dirFolder = '../miweb/proyecto-tfg/proyecto-tfg-completo/dist/images/productos/';
 fs.mkdirSync(dirFolder, {recursive: true})
 const dir = fs.readdirSync(dirFolder);
 app.locals.cont = 0
@@ -23,7 +23,7 @@ const storage = multer.diskStorage({
             app.locals.cont++
         }
         app.locals.max = max
-        const folderPath = `../miweb/proyecto-tfg/proyecto-tfg-completo/images/productos/${max}`;
+        const folderPath = `../miweb/proyecto-tfg/proyecto-tfg-completo/dist/images/productos/${max}`;
         fs.mkdirSync(folderPath, { recursive: true });
         cb(null, folderPath)
     },
@@ -33,7 +33,7 @@ const storage = multer.diskStorage({
 });
 const storagePerfil = multer.diskStorage({
     destination: async (req, file, cb) => {
-        const folderPath = `../miweb/proyecto-tfg/proyecto-tfg-completo/images/user/${app.locals.id}`;
+        const folderPath = `../miweb/proyecto-tfg/proyecto-tfg-completo/dist/images/user/${app.locals.id}`;
         fs.mkdirSync(folderPath, { recursive: true });
 
         cb(null, folderPath)
@@ -272,7 +272,7 @@ router.post('/api/delSubasta', async (req, res) => {
 
 router.get('/api/subasta/:id/', async (req, res) => {
     try {
-        const folderPath = `../miweb/proyecto-tfg/proyecto-tfg-completo/images/productos/${req.params.id}`;
+        const folderPath = `../miweb/proyecto-tfg/proyecto-tfg-completo/dist/images/productos/${req.params.id}`;
         fs.readdir(folderPath, (err, files) => {
             files = files.map(i => `/images/productos/${req.params.id}/${i}`)
             res.send(files)
@@ -287,7 +287,7 @@ router.get('/api/subasta/:id/', async (req, res) => {
 router.post('/api', async (req, res) => {
     try {
         const max = app.locals.max
-        const dirImg = `../miweb/proyecto-tfg/proyecto-tfg-completo/images/productos/${max}`;
+        const dirImg = `../miweb/proyecto-tfg/proyecto-tfg-completo/dist/images/productos/${max}`;
         const fileInDirImg = fs.readdirSync(dirImg);
         const objeto = {
             title: req.body.titulo,
@@ -301,7 +301,7 @@ router.post('/api', async (req, res) => {
         };
     
         const [results] = await connection.query('INSERT INTO producto SET ?', [objeto]);
-        let directoryPath = `../miweb/proyecto-tfg/proyecto-tfg-completo/images/productos/${max}`;
+        let directoryPath = `../miweb/proyecto-tfg/proyecto-tfg-completo/dist/images/productos/${max}`;
         fs.mkdirSync(directoryPath, { recursive: true });
         res.send(results);
     } catch (error) {
