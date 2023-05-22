@@ -1,4 +1,5 @@
 <template>
+  <HeaderPopup v-if="buttonTrigger" :TogglePopup="() => TogglePopup()" />
   <div class="subastaVue">
     <div class="imgs">
       <div class="select-img">
@@ -29,9 +30,7 @@
         ></i>
         <i
           v-else
-          @click="
-            addFavourites(prouctContent.id_producto, prouctContent.created_by)
-          "
+          @click="addFavourites(prouctContent.id_producto, prouctContent.created_by)"
           class="fa-regular fa-heart"
         ></i>
       </div>
@@ -71,8 +70,12 @@
 <script>
 import axios from "axios";
 import io from "socket.io-client";
+import HeaderPopup from "../HeaderPopup.vue";
 
 export default {
+  components: {
+    HeaderPopup
+  },
   data() {
     return {
       arrayImg: [],
@@ -83,42 +86,45 @@ export default {
       startDate: new Date(),
       datosUsuario: [],
       mensajeError: false,
-      mensajeErrorMenor: false
+      mensajeErrorMenor: false,
+      buttonTrigger: false
     };
   },
   methods: {
+    TogglePopup() {
+      this.buttonTrigger = !this.buttonTrigger;
+    },
     async pujar() {
-      const importe = document.querySelector('input[type="number"]').value;
-      const cookie = this.$cookies.get("loginCookie");
+      const cookie = this.$cookies.get("loginCookie")
+      if (cookie) {
+        const importe = document.querySelector('input[type="number"]').value;
+        const cookie = this.$cookies.get("loginCookie");
 
-      const data = {
-        importe: importe,
-        user: cookie.nombre,
-        id_cliente: cookie.id_cliente,
-      };
+        const data = {
+          importe: importe,
+          user: cookie.nombre,
+          id_cliente: cookie.id_cliente,
+        };
 
-      await axios
-        .get(`http://localhost:3001/miDinero/${cookie.id_cliente}`)
-        .then(async (res) => {
-          console.log(res.data.saldo.saldo < parseInt(importe));
-          console.log(importe);
-          console.log(this.prouctContent.price);
-          if (res.data.saldo.saldo < parseInt(importe)) {
-            this.mensajeError = true
-          }else if (importe < this.prouctContent.price ){
-            this.mensajeErrorMenor = true
-          }else {
-            this.socket.emit("puja", data);
-            await axios
-            .post(
-              `http://localhost:3001/subasta/${this.$route.params.id}/${this.$route.params.categoria}/${this.$route.params.titulo}`,
-              { price: importe, ultimoPujador: cookie.id_cliente }
-              )
-              .then((res) => {
-                console.log(res.data);
-              });
-          }
-        });
+        await axios
+          .get(`http://localhost:3001/miDinero/${cookie.id_cliente}`)
+          .then(async (res) => {
+            if (res.data.saldo.saldo < parseInt(importe)) {
+              this.mensajeError = true
+            }else if (importe < this.prouctContent.price ){
+              this.mensajeErrorMenor = true
+            }else {
+              this.socket.emit("puja", data);
+              await axios
+              .post(
+                `http://localhost:3001/subasta/${this.$route.params.id}/${this.$route.params.categoria}/${this.$route.params.titulo}`,
+                { price: importe, ultimoPujador: cookie.id_cliente }
+                )
+            }
+          });
+      }else {
+        this.TogglePopup()
+      }
     },
     getTimeRemaining() {
       const total =
@@ -130,14 +136,19 @@ export default {
       return { days, hours, minutes, seconds };
     },
     async addFavourites(id_producto, created_by) {
-      const object = {
-        id_producto,
-        created_by,
-      };
-      object["cookie"] = this.$cookies.get("loginCookie").id_cliente;
-      await axios.post(`http://localhost:3001/favourites`, object);
-      await axios.post(`http://localhost:3001/favouritesProducto`, object);
-      location.reload()
+      const cookie = this.$cookies.get("loginCookie")
+      if (cookie) {
+        const object = {
+          id_producto,
+          created_by,
+        };
+        object["cookie"] = cookie.id_cliente;
+        await axios.post(`http://localhost:3001/favourites`, object);
+        await axios.post(`http://localhost:3001/favouritesProducto`, object);
+        location.reload()
+      }else {
+        this.TogglePopup()
+      }
     },
     async delFavourites(id_producto, created_by) {
       const object = {
@@ -145,7 +156,6 @@ export default {
         created_by,
       };
       object["cookie"] = this.$cookies.get("loginCookie").id_cliente;
-      console.log(object);
       await axios.post(`http://localhost:3001/favouritesDel`, object);
       await axios.post(`http://localhost:3001/favouritesProductoDel`, object);
       location.reload()
@@ -168,15 +178,12 @@ export default {
       )
       .then((res) => {
         const { data } = res;
-
         this.prouctContent = data[0];
       });
     
-    console.log(this.$route.params.id);
     await axios
       .get(`http://localhost:3001/subasta/${this.$route.params.id}`)
       .then((res) => {
-        console.log(this.$route.params.id);
         const { data } = res;
         this.arrayImg = data;
       });

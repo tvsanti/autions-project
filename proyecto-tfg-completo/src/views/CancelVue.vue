@@ -15,7 +15,6 @@ export default {
   },
   async mounted() {
     const cookie = this.$cookies.get("loginCookie");
-    console.log(this.$store.state.siguienteSaldo);
     await axios.post(
       `http://localhost:3001/miDineroCancelado/${cookie.id_cliente}`
     );

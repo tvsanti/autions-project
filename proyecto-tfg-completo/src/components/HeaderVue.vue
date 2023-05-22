@@ -64,18 +64,19 @@ export default {
     return {
       buttonTrigger: false,
       buttonTriggerSlado: false,
-      showMenu: false,
     };
   },
   methods: {
     TogglePopup() {
       this.buttonTrigger = !this.buttonTrigger;
     },
-    toggleMenu() {
-      this.showMenu = !this.showMenu;
-    },
     TogglePopupSaldo() {
-      this.buttonTriggerSlado = !this.buttonTriggerSlado;
+      const cookie = this.$cookies.get("loginCookie")
+      if (cookie) {
+        this.buttonTriggerSlado = !this.buttonTriggerSlado;
+      }else{
+        this.TogglePopup()
+      }
     },
     LogOut() {
       this.$cookies.remove("loginCookie");

@@ -77,7 +77,6 @@ export default {
         created_by,
       };
       object["cookie"] = this.$cookies.get("loginCookie").id_cliente;
-      console.log(object);
       await axios.post(`http://localhost:3001/favouritesDel`, object);
       await axios.post(`http://localhost:3001/favouritesProductoDel`, object);
       location.reload()
@@ -103,7 +102,6 @@ export default {
             if (i != null) {
               i.favoritos = false;
             }else {
-              console.log(index);
               data.splice(index,index+1)
             }
           }

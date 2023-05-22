@@ -151,7 +151,7 @@ router.get('/subasta/:id/:categoria/:titulo', async (req, res) => {
         const [results] = await connection.query('SELECT * FROM producto WHERE id_producto = ? and categoria = ? and title = ?', [req.params.id, req.params.categoria, req.params.titulo])
         res.json(results);
     } catch (error) {
-        console.log('Error');
+        console.log(error);
         res.status(404).send("Error")
     }
 })
@@ -300,7 +300,6 @@ router.post('/api', async (req, res) => {
         };
     
         const [results] = await connection.query('INSERT INTO producto SET ?', [objeto]);
-        console.log('max 2 ==', max);
         let directoryPath = `../public/images/productos/${max}`;
         fs.mkdirSync(directoryPath, { recursive: true });
         res.send(results);

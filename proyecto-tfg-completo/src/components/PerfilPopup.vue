@@ -38,14 +38,12 @@ export default {
         await axios.post("http://localhost:3001/api/localimages/perfil",perfilImg);
       }
       if (this.formularioEditar.user != "") {
-        console.log(this.formularioEditar.user);
         await axios.post("http://localhost:3001/api/editarPerfil", this.formularioEditar)
       }
       window.location.reload()
     },
     onFileChange() {
       this.file = this.$refs.file.files[0]
-      console.log(this.file);
     },
   },
 };
