@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 const Router = require("./routes/routes.js");
 const cors = require("cors");
-const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const http = require('http');
 const cron = require('node-cron')
@@ -14,7 +13,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(cookieParser());
 app.use(cors({
   origin: 'http://167.99.240.123'
 }));

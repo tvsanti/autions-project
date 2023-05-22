@@ -26,7 +26,6 @@ const router = createRouter({
             component: Publicar,
             name: 'Publicar',
             beforeEnter: (to, from, next) => {
-                console.log(VueCookies.get('loginCookie') == null)
                 if ( VueCookies.get('loginCookie') == null ) {
                     next('/error404');
                 } else {
@@ -54,7 +53,6 @@ const router = createRouter({
             component: Perfil,
             name: 'PerfilVue',
             beforeEnter: (to, from, next) => {
-                console.log(VueCookies.get('loginCookie') == null)
                 if ( VueCookies.get('loginCookie') == null ) {
                     next('/error404');
                 } else {
@@ -67,7 +65,6 @@ const router = createRouter({
             component: Favourites,
             name: 'FavouritesVue',
             beforeEnter: (to, from, next) => {
-                console.log(VueCookies.get('loginCookie') == null)
                 if ( VueCookies.get('loginCookie') == null ) {
                     next('/error404');
                 } else {

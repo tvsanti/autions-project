@@ -32,7 +32,6 @@ export default {
     async depositar() {
       const cookie = this.$cookies.get("loginCookie")
       this.$store.commit('sumarSaldo',this.cantidad)    
-      console.log(this.$store.state.siguienteSaldo);
       await axios
         .post(
           `http://167.99.240.123:81/api/pujar/${cookie.id_cliente}`,

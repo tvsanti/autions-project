@@ -1,5 +1,7 @@
 <template>
   <HeaderVue />
+  <HeaderPopup v-if="buttonTrigger" :TogglePopup="() => TogglePopup()" />
+
   <div class="contentProductos">
     <FiltrosVue
       @onFirePrecio="eventEmmitedFromChildPrecio"
@@ -48,6 +50,8 @@
 import axios from "axios";
 import FiltrosVue from "@/components/Buscar/FiltrosVue.vue";
 import HeaderVue from "@/components/HeaderVue.vue";
+import HeaderPopup from "../components/HeaderPopup.vue"
+
 import { ref } from "vue";
 
 export default {
@@ -55,11 +59,13 @@ export default {
   components: {
     FiltrosVue,
     HeaderVue,
+    HeaderPopup
   },
   data() {
     return {
       isActive: true,
       items: [],
+      buttonTrigger: false
     };
   },
   setup() {
@@ -91,7 +97,12 @@ export default {
     };
   },
   methods: {
+    TogglePopup() {
+      this.buttonTrigger = !this.buttonTrigger;
+    },
     async addFavourites(id_producto, created_by) {
+      const cookie = this.$cookies.get("loginCookie")
+      if (cookie) {
       const object = {
         id_producto,
         created_by,
@@ -100,7 +111,9 @@ export default {
       await axios.post(`http://167.99.240.123:81/api/favourites`, object);
       await axios.post(`http://167.99.240.123:81/api/favouritesProducto`, object);
       location.reload()
-
+      } else {
+        this.TogglePopup()
+      }
     },
     async delFavourites(id_producto, created_by) {
       const object = {
@@ -108,7 +121,6 @@ export default {
         created_by,
       };
       object["cookie"] = this.$cookies.get("loginCookie").id_cliente;
-      console.log(object);
       await axios.post(`http://167.99.240.123:81/api/favouritesDel`, object);
       await axios.post(`http://167.99.240.123:81/api/favouritesProductoDel`, object);
       location.reload()
@@ -163,7 +175,6 @@ export default {
             i.favoritos = false;
           }
         });
-        console.log(data);
         this.items = data;
       });
   },

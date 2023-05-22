@@ -15,15 +15,10 @@ export default {
   },
   async mounted() {
     const cookie = this.$cookies.get("loginCookie")
-    console.log(this.$store.state.siguienteSaldo);
     await axios
       .post(
         `http://167.99.240.123:81/api/miDinero/${cookie.id_cliente}`,{precio: this.$store.state.siguienteSaldo}
       )
-      .then((res) => {
-        console.log(res);
-        
-      });
   },
 };
 </script>

@@ -31,7 +31,6 @@ export default {
     limpiarPalabra() {
       this.copiaBuscar = this.consultaBuscar
       this.consultaBuscar = this.consultaBuscar.slice(1)
-      console.log(this.consultaBuscar);
     }
   }
 };
