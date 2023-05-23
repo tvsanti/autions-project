@@ -2,7 +2,7 @@
   <HeaderPopup v-if="buttonTrigger" :TogglePopup="() => TogglePopup()" />
   <div class="subastaVue">
     <div class="imgs">
-      <div class="select-img">
+      <div class="select-img" id="scrollRed">
         <img
           v-for="(img, index) in arrayImg"
           @click="arraySeleccionada = index"
