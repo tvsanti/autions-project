@@ -5,7 +5,7 @@
   <div class="pefilMain">
     <div class="userInfo">
       <div class="infoPerfil">
-        <img class="roundedProfile" :src="fotoPerfil" alt="" />
+        <img class="roundedProfile" :src="fotoPerfil"  />
         <div class="textPerfil">
           <pre>{{ nombre }}</pre>
           <span
@@ -31,7 +31,7 @@
             },
           }"
         >
-          <img :src="item.img" alt="" />
+          <img :src="item.img"  />
         </router-link>
         <div class="perfilDescripcion">
           <div>
@@ -68,7 +68,7 @@
 
 <script>
 import axios from "axios";
-import PerfilPopup from "@/components/PerfilPopup.vue";
+import PerfilPopup from "@/components/Perfil/PerfilPopup.vue";
 import HeaderVue from "@/components/HeaderVue.vue";
 export default {
   name: "PerfilVue",
@@ -139,4 +139,67 @@ export default {
   border-radius: 100%
   width: 200px
   height: 200px
+
+.pefilMain
+  width: 100%
+  display: flex
+  flex-direction: column
+  align-items: center
+  .userInfo
+    width: 80%
+    display: flex
+    justify-content: space-between
+    button
+      height: 2.2rem
+      padding: 0 1.5rem
+      border-radius: 3px
+      background: none
+      border: 1px solid
+      cursor: pointer
+    .infoPerfil
+      display: flex
+      gap: 3rem
+
+  hr
+    margin-top: 4rem
+    width: 80%
+
+  .perfilVue
+    width: 80%
+    margin-top: 1rem
+    display: grid
+    gap: 3rem
+    grid-template-columns: repeat(4, 1fr)
+    align-items: center
+    @media only screen and (max-width: 1250px)
+      grid-template-columns: repeat(3, 1fr)
+    @media only screen and (max-width: 900px)
+      grid-template-columns: repeat(2, 1fr)
+    @media only screen and (max-width: 480px)
+      grid-template-columns: repeat(1, 1fr)
+      grid-gap: 4rem
+    .perfilCard
+      display: flex
+      flex-direction: column
+      .perfilDescripcion
+        display: flex
+        justify-content: space-between
+        align-items: center
+        .iconsPerfil
+          display: flex
+          gap: 1rem
+          .fa-trash
+            color: #282828
+          i
+            font-size: 2rem
+            color: #bb1e26
+      a
+        text-decoration: none
+        color: black
+        img
+          cursor: pointer
+          border-radius: 1rem
+          width: 100%
+          height: 200px
+
 </style>

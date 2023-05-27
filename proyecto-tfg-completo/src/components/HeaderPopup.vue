@@ -37,7 +37,7 @@
           mayúscula y una longitud mínima de 8 caracteres</span
         >
         <div>
-          <input required type="checkbox" name="" id="" />Acepto las condiciones
+          <input required type="checkbox"   />Acepto las condiciones
           de uso y la información básica sobre protección de datos.
         </div>
         <input id="submitIS" type="submit" value="Registrarse" />

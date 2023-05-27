@@ -14,7 +14,7 @@
             },
           }"
         >
-          <img :src="item.img" alt="" />
+          <img :src="item.img"  />
         </router-link>
         <div class="perfilDescripcion">
           <div>
@@ -113,6 +113,43 @@ export default {
 </script>
 
 <style lang="sass">
-img
-  width: 200px
+.mainFavorito
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  width: 100%
+  h1
+    font-size: 3rem
+  .favoritosVue
+    width: 100%
+    display: grid
+    grid-template-columns: repeat(4, 1fr)
+    align-items: center
+    @media only screen and (max-width: 1250px)
+      grid-template-columns: repeat(3, 1fr)
+    @media only screen and (max-width: 900px)
+      grid-template-columns: repeat(2, 1fr)
+    @media only screen and (max-width: 480px)
+      grid-template-columns: repeat(1, 1fr)
+    .perfilCard
+      display: flex
+      flex-direction: column
+      margin: 2rem 2rem
+      .perfilDescripcion
+        display: flex
+        justify-content: space-between
+        align-items: center
+        i
+          font-size: 2rem
+          color: #bb1e26
+      a
+        text-decoration: none
+        color: black
+        img
+          cursor: pointer
+          border-radius: 1rem
+          width: 100%
+          height: 300px
+
 </style>

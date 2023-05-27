@@ -11,5 +11,9 @@ export default {
 </script>
 
 <style lang="sass">
+@import "./style/style.sass"
 
+footer
+  @include displayFlex(row,center,center)
+  padding: 1rem 0
 </style>

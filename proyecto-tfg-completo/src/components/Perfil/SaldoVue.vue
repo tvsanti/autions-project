@@ -54,5 +54,23 @@ export default {
   },
 };
 </script>
-<style></style>
+<style lang="sass">
+.saldo
+  display: flex
+  justify-content: center
+  flex-direction: column
+  gap: 1rem
+  h3
+    font-weight: 400
+    font-size: 1.3rem
+  label
+    margin-right: 1rem
+  button
+    background-color: #bb1e26
+    color: white
+    border: none
+    margin-top: 1rem
+    padding: .5rem 2rem
+    border-radius: .4rem
+</style>
     
