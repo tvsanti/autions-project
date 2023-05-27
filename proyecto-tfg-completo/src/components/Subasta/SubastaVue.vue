@@ -10,12 +10,12 @@
           :key="img"
         />
       </div>
-      <img id="big-img" :src="arrayImg[arraySeleccionada]" alt="" />
+      <img id="big-img" :src="arrayImg[arraySeleccionada]"  />
     </div>
     <div class="menuSubasta">
       <div class="valoracionUser">
         <div class="perfilUser">
-          <img :src="datosUsuario.imgPerfil" alt="" />
+          <img :src="datosUsuario.imgPerfil"  />
           <div class="infoUser">
             <h3>{{ datosUsuario.nombre }}</h3>
             <h4>4 productos</h4>

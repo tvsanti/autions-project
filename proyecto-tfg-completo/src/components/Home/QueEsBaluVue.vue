@@ -11,7 +11,7 @@
             pujas de otros usuarios
           </p>
         </div>
-        <img src="../../..../../../img/foto2.jpg" alt="">
+        <img src="../../..../../../img/foto2.jpg" >
       </div>
       <div>
         <div>
@@ -22,7 +22,7 @@
             precios increíbles.
           </p>
         </div>
-        <img src="../../../img/foto1.jpg" alt="">
+        <img src="../../../img/foto1.jpg" >
       </div>
       <div class="queEsRerversed">
         <div>
@@ -33,7 +33,7 @@
             ganar dinero hoy mismo.
           </p>
         </div>
-        <img src="../../../img/foto3.jpg" alt="">
+        <img src="../../../img/foto3.jpg" >
       </div>
     </div>
   </div>

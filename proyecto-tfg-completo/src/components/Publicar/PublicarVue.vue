@@ -2,8 +2,8 @@
   <div class="mainPublicar">
     <form enctype="multipart/form-data" @submit.prevent="createPost">
       <h1>Publicar producto</h1>
-      <label id="label1" for="">Categoria</label>
-      <select required v-model="formulario.categoria" id="">
+      <label id="label1" >Categoria</label>
+      <select required v-model="formulario.categoria" >
         <option
           v-for="item in $store.state.itemsCompleta"
           :key="item"
@@ -12,16 +12,16 @@
           {{ item.titulo }}
         </option>
       </select>
-      <label for="">Titulo</label>
+      <label >Titulo</label>
       <input
         type="text"
         v-model="formulario.titulo"
         placeholder="Que quieres subastar?"
       />
-      <label for="">Descripcion</label>
+      <label >Descripcion</label>
       <textarea v-model="formulario.descripcion" placeholder="Descripcion" />
-      <label for="">Estado del producto</label>
-      <select v-model="formulario.estado" id="">
+      <label >Estado del producto</label>
+      <select v-model="formulario.estado" >
         <option
           v-for="estado in $store.state.estado"
           :key="estado"
@@ -31,10 +31,10 @@
         </option>
       </select>
 
-      <label for="">Fin de la subasta</label>
+      <label >Fin de la subasta</label>
       <input v-model="formulario.time_left" type="datetime-local" />
 
-      <label for="">Precio</label>
+      <label >Precio</label>
       <input v-model="formulario.precio" type="number" />
       <div id="arrastrarImagen" @dragover="onDragOver" @drop="onDrop">
         <label for="imagen">
@@ -113,7 +113,93 @@ export default {
 </script>
 
 <style lang="sass">
-@import ../../../style/publicar
+@import ../../../style/style
+
+header
+  @include displayFlex(row,space-around,center)
+  width: 100% 
+
+.mainPublicar
+    width: 100%
+    display: flex
+    justify-content: center
+    form
+      margin-bottom: 4vh
+      border: .5px solid gray
+      padding: 1.5rem 3rem
+      border-radius: 1rem
+      display: flex
+      flex-direction: column
+      width: 35%
+      @media only screen and (max-width: 1500px)
+        width: 40%
+      @media only screen and (max-width: 1250px)
+        width: 45%
+      @media only screen and (max-width: 900px)
+        width: 65%
+      @media only screen and (max-width: 480px)
+        width: 80%
+         
+      h1
+        text-align: center
+        font-weight: 600
+      select
+        height: 2rem
+      input,textarea,select
+        padding-left: 8px
+      input
+          height: 2rem
+          width: 100%
+      textarea
+        resize: vertical
+        height: 25vh
+        padding-top: 8px
+      label
+        margin-top: 2rem
+
+      #inputEnviar
+        border: none
+        border-radius: 5px
+        cursor: pointer
+        margin-top: 2rem
+        transition: .3s
+        background: #bb1e26
+        color: white
+        width: 35%
+
+        &:hover
+          background: #861e23
+      #label1
+        margin-top: 1rem
+
+      #arrastrarImagen
+        opacity: 1
+        border: 2px dashed grey
+        display: flex
+        justify-content: center
+        position: relative
+        align-items: center
+        flex-direction: column 
+        margin-top: 2rem
+        #inputFile
+          opacity: 0
+          position: absolute
+          height: 100%
+          width: 100%
+        label
+          margin: 0
+          width: 100%
+          padding: 4rem 0
+          text-align: center
+      span
+        margin-top: .7rem
+        font-weight: 500
+
+    #file
+      width: 200px
+      background:#bb1e26
+      padding: 1rem
+    
 </style>
 
 

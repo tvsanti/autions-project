@@ -8,7 +8,7 @@
     <nav class="navbar navbar-expand-lg ">
       <div class="container-fluid">
         <router-link class="navbar-brand" to="/">
-          <img src="../../img/logo1.png" alt="" />
+          <img src="../../img/logo1.png"  />
         </router-link>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import SaldoVueVue from "@/components/SaldoVue.vue";
+import SaldoVueVue from "@/components/Perfil/SaldoVue.vue";
 
 import HeaderPopup from "./HeaderPopup.vue";
 export default {
@@ -85,3 +85,70 @@ export default {
   },
 };
 </script>
+
+<style lang="sass">
+@import "../../style/style"
+header
+  @include displayFlex(row,space-around,center)
+  width: 100% 
+
+  nav
+    display: none
+    @include displayFlex(row,space-between,center)
+    position: fixed
+    width: 91%
+    background: white
+    img
+      width: 100px
+      padding: .5rem 0
+    .header-buttons
+      display: flex
+      justify-content: center
+      align-items: center
+      width: 100%
+      @media only screen and (max-width: 991px)
+        gap: 2rem
+      .fa-circle-plus
+        padding-right: .5rem
+      a
+        display: flex
+        gap: 1rem
+      i
+        color: #bb1e26
+        font-size: 1.2rem
+      .inicioSesion
+        border: 1px solid
+        border-radius: 5px
+        transition: .3s
+        &:hover
+          background: #51585e
+          color: white
+      .heartButton
+        background: none
+        button
+          display: flex
+          align-items: center
+          gap: 1rem
+          i
+            font-size: 1.6rem
+
+      .heart-none
+        font-size: 2rem
+
+      a,button
+        @include buttonStyle()
+        display: flex
+        background: none
+        justify-content: center
+        align-items: center
+        padding: 0 1.5rem
+        text-decoration: none
+        color: black
+        height: 2.9rem
+        font-size: 16px
+        @media only screen and (max-width: 991px)
+          font-size: 1.3rem
+
+
+
+</style>
