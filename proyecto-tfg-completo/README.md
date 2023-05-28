@@ -1,24 +1,22 @@
 # proyecto-tfg-completo
 
-## Project setup
+## Frontend setup
 ```
 npm install
 ```
+## Backend setup
+```
+cd server/
+npm install
+```
 
-### Compiles and hot-reloads for development
+### Start fronted
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Start backend
 ```
-npm run build
+cd /server
+node index.js
 ```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
