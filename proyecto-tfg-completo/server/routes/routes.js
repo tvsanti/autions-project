@@ -10,6 +10,7 @@ const bcrypt = require('bcrypt');
 const stripe = require("stripe")('sk_test_51N5WqCJSil5ToMv4p5W88EWsDXCOV2OPD5fhQBxLjUNOhrLRJ3az2rgjgugTXoV63tAPNer7AZnZERFuSv2ij80S00cVdCgv4W');
 
 const dirFolder = '../public/images/productos/';
+fs.mkdirSync(dirFolder, { recursive: true });
 const dir = fs.readdirSync(dirFolder);
 app.locals.cont = 0
 
